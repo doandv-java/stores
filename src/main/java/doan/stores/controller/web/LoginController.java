@@ -1,4 +1,4 @@
-package doan.stores.controller.controller;
+package doan.stores.controller.web;
 
 import doan.stores.bussiness.BaseService;
 import doan.stores.bussiness.UserService;
