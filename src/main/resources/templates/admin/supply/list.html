@@ -44,7 +44,7 @@
                                         <th>Địa chỉ</th>
                                         <th>Active</th>
                                         <th class="text-primary">
-                                            <a href="javascript:void(0)" onclick="createSupply()"><i
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#supplyModal"><i
                                                     class="far fa-plus-square"></i></a>
                                         </th>
                                     </tr>
@@ -104,15 +104,57 @@
         </div>
     </div>
 
+    <div class="modal fade" id="supplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Thông tin nhà cung cấp</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <input type="text" id="name" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="name">Tên</label>
+                        <p class="error" id="name_errors">Validate</p>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="phone" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="phone">Số điện thoại</label>
+                        <p class="error" id="phone_errors">Validate</p>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="email" id="email" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="email">Email</label>
+                        <p class="error" id="email_errors">Validate</p>
+                    </div>
+                    <div class="md-form mb-5">
+                        <input type="text" id="address" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="address">Địa chỉ</label>
+                        <p class="error" id="address_errors">Validate</p>
+                    </div>
+                    <div class="md-form mb-5">
+                        <textarea type="text" id="detail" class="md-textarea form-control" rows="4"></textarea>
+                        <label data-error="wrong" data-success="right" for="detail">Mô tả chi tiết</label>
+                        <p class="error" id="detail_errors">Validate</p>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-unique" id="submitBtn">Lưu<i class="fas fa-paper-plane-o ml-1"></i></button>
+                    <button class="btn btn-unique" data-dismiss="modal">Hủy bỏ<i class="fas fa-paper-plane-o ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--Footer-->
     <th:block th:replace="admin/fragments/footer::footer"/>
     <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
     <!--/.Footer-->
-    <script>
-        $('#supplyTable').dataTable();
-    </script>
-
+    <script th:src="@{/js/admin_supply.js}"></script>
 </div>
 </body>
 </html>
