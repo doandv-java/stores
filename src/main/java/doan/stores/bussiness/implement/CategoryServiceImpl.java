@@ -4,6 +4,7 @@ import doan.stores.bussiness.CategoryService;
 import doan.stores.domain.Category;
 import doan.stores.dto.request.CategoryRequest;
 import doan.stores.persistenct.CategoryRepository;
+import doan.stores.persistenct.ProductRepository;
 import doan.stores.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,23 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public List<Category> findCategoriesByActive(int active) {
         return categoryRepository.findCategoriesByActiveIs(active);
     }
 
+
     @Override
     public void saveCategory(CategoryRequest request) {
-        Category category = new Category();
+        Category category;
+        if (request.getId()==null) {
+            category = new Category();
+        } else {
+            category = categoryRepository.getOne(request.getId());
+        }
         category.setId(request.getId());
         category.setName(request.getName());
         category.setDetail(request.getDetail());

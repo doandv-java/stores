@@ -39,9 +39,10 @@
                                     <tr>
                                         <th>Tên</th>
                                         <th>Mô tả</th>
-                                        <th>Trạng thái</th>
+                                        <th>Số lượng sản phẩm</th>
                                         <th class="text-primary">
-                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#categoryModal"><i
+                                            <a href="javascript:void(0)" data-toggle="modal"
+                                               data-target="#categoryModal"><i
                                                     class="far fa-plus-square"></i></a>
                                         </th>
                                     </tr>
@@ -50,16 +51,7 @@
                                     <tr th:each="category:${categories}" th:id="${category.id}">
                                         <td th:text="${category.name}"></td>
                                         <td th:text="${category.detail}"></td>
-                                        <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input"
-                                                       th:id="${category.id}+'active'"
-                                                       th:checked="${category.active==1}"
-                                                       th:onchange="'changeActive('+${category.id}+')'">
-                                                <label class="custom-control-label"
-                                                       th:for="${category.id}+'active'"></label>
-                                            </div>
-                                        </td>
+                                        <td th:text="${category.products.size()}"></td>
                                         <td class="text-primary">
                                             <a href="javascript:void(0)"
                                                th:onclick="'editCategory('+${category.id}+')'"><i

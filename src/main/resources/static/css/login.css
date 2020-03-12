@@ -22,6 +22,7 @@ header,
         height: 650px;
     }
 }
+
 @-webkit-keyframes chartjs-render-animation {
     from {
         opacity: 0.99
@@ -44,6 +45,13 @@ header,
     -webkit-animation: chartjs-render-animation 0.001s;
     animation: chartjs-render-animation 0.001s;
 }
-.login-page{
-    background-image: url("images/background_login.jpg");
+
+.login-page {
+    background-image: url("/images/background_login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    background-color: #464646;
+
 }

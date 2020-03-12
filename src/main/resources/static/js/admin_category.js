@@ -32,6 +32,14 @@ $(document).ready(function () {
 
 });
 
+function changeActive(id) {
+    let active = $('#' + id + 'active').prop('checked') === true ? 1 : 0;
+    $.ajax({
+        type: 'PUT',
+        url: "/category/" + id + "/" + active
+    });
+}
+
 function editCategory(id) {
     $.ajax({
         type: 'GET',
@@ -101,7 +109,7 @@ function hideElementError(id) {
     $('#' + id).keyup(function () {
         hideError(id);
     });
-    $('#' + id ).change(function () {
+    $('#' + id).change(function () {
         hideError(id);
     });
     $('#' + id).focusin(function () {

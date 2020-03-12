@@ -28,7 +28,7 @@ public class Product extends BaseEntity {
     @Column(name = "category_id", insertable = false, updatable = false)
     private Long categoryId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 
