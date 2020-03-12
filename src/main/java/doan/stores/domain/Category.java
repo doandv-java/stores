@@ -20,8 +20,8 @@ public class Category extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "detail")
+    private String detail;
 
     @Column(name = "active")
     private int active;

@@ -32,43 +32,40 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title text-center">Danh sách nhà cung cấp</h4>
+                            <h4 class="card-title text-center">Danh sách danh mục</h4>
                             <div class="table-striped">
-                                <table class="table text-center" id="supplyTable">
+                                <table class="table text-center" id="categoryTable">
                                     <thead>
                                     <tr>
                                         <th>Tên</th>
                                         <th>Mô tả</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Email</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Active</th>
+                                        <th>Trạng thái</th>
                                         <th class="text-primary">
-                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#supplyModal"><i
+                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#categoryModal"><i
                                                     class="far fa-plus-square"></i></a>
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="supply:${supplies}" th:id="${supply.id}">
-                                        <td th:text="${supply.name}"></td>
-                                        <td th:text="${supply.detail}"></td>
-                                        <td th:text="${supply.phone}"></td>
-                                        <td th:text="${supply.email}"></td>
-                                        <td th:text="${supply.address}"></td>
+                                    <tr th:each="category:${categories}" th:id="${category.id}">
+                                        <td th:text="${category.name}"></td>
+                                        <td th:text="${category.detail}"></td>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" th:id="${supply.id}+'active'"
-                                                       th:checked="${supply.active==1}"
-                                                       th:onchange="'changeActive('+${supply.id}+')'">
-                                                <label class="custom-control-label" th:for="${supply.id}+'active'"></label>
+                                                <input type="checkbox" class="custom-control-input"
+                                                       th:id="${category.id}+'active'"
+                                                       th:checked="${category.active==1}"
+                                                       th:onchange="'changeActive('+${category.id}+')'">
+                                                <label class="custom-control-label"
+                                                       th:for="${category.id}+'active'"></label>
                                             </div>
                                         </td>
                                         <td class="text-primary">
-                                            <a href="javascript:void(0)" th:onclick="'editSupply('+${supply.id}+')'"><i
+                                            <a href="javascript:void(0)"
+                                               th:onclick="'editCategory('+${category.id}+')'"><i
                                                     class="far fa-edit"></i></a>
                                             <a href="javascript:void(0)"
-                                               th:onclick="'deleteSupply('+${supply.id}+')'"><i
+                                               th:onclick="'deleteCategory('+${category.id}+')'"><i
                                                     class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -96,7 +93,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn muốn xóa nhà cung cấp phải không?</p>
+                    <p>Bạn muốn xóa danh mục phải không?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -106,12 +103,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="supplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Thông tin nhà cung cấp</h4>
+                    <h4 class="modal-title w-100 font-weight-bold">Thông tin danh mục</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -120,7 +117,6 @@
                     <div>
                         <input type="hidden" id="id">
                         <input type="hidden" id="nameOld">
-                        <input type="hidden" id="deleted">
                         <input type="hidden" id="active">
                     </div>
                     <div class="md-form mb-5">
@@ -129,23 +125,8 @@
                         <p class="error" id="name_errors"></p>
                     </div>
                     <div class="md-form mb-5">
-                        <input type="text" id="phone" class="form-control">
-                        <label for="phone">Số điện thoại</label>
-                        <p class="error" id="phone_errors"></p>
-                    </div>
-                    <div class="md-form mb-5">
-                        <input type="email" id="email" class="form-control ">
-                        <label for="email">Email</label>
-                        <p class="error" id="email_errors"></p>
-                    </div>
-                    <div class="md-form mb-5">
-                        <input type="text" id="address" class="form-control">
-                        <label for="address">Địa chỉ</label>
-                        <p class="error" id="address_errors"></p>
-                    </div>
-                    <div class="md-form mb-5">
                         <textarea type="text" id="detail" class="md-textarea form-control" rows="4"></textarea>
-                        <label for="detail">Mô tả chi tiết</label>
+                        <label for="detail">Mo tả</label>
                         <p class="error" id="detail_errors"></p>
                     </div>
                 </div>
@@ -162,7 +143,7 @@
     <th:block th:replace="admin/fragments/footer::footer"/>
     <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
     <!--/.Footer-->
-    <script th:src="@{/js/admin_supply.js}"></script>
+    <script th:src="@{/js/admin_category.js}"></script>
 </div>
 </body>
 </html>

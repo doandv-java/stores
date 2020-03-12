@@ -1,24 +1,24 @@
 $(document).ready(function () {
 
-    $('#supplyTable').dataTable();
+    $('#categoryTable').dataTable();
 
-    resetErrorSupply();
+    resetErrorCategory();
 
     $('#submitBtn').click(function () {
-        let supply = getSupplyForm();
+        let category = getCategoryForm();
         $.ajax({
             type: "POST",
             dataType: 'JSON',
             contentType: 'application/json',
-            url: '/supply',
-            data: JSON.stringify(supply),
+            url: '/category',
+            data: JSON.stringify(category),
             cache: false,
             timeout: 60000,
             success: function (data) {
                 if (data.status === 200) {
-                    setEmptySupply();
-                    $('#supplyModal').modal('hide');
-                    window.location.href = window.location.origin + "/admin/supply";
+                    setEmptyCategory();
+                    $('#categoryModal').modal('hide');
+                    window.location.href = window.location.origin + "/admin/category";
                 } else {
                     let arrError = data.errors;
                     for (let i = 0; i < arrError.length; i++) {
@@ -29,35 +29,28 @@ $(document).ready(function () {
 
         });
     });
+
 });
 
-function changeActive(id) {
-    let active = $('#' + id + 'active').prop('checked') === true ? 1 : 0;
-    $.ajax({
-        type: 'PUT',
-        url: "/supply/" + id + "/" + active
-    });
-}
-
-function editSupply(id) {
+function editCategory(id) {
     $.ajax({
         type: 'GET',
-        url: '/supply/' + id,
+        url: '/category/' + id,
         cache: false,
         timeout: 60000,
         success: function (data) {
-            setDataSupply(data);
-            $('#supplyModal').modal("show");
+            setDataCategory(data);
+            $('#categoryModal').modal("show");
         }
     });
 }
 
-function deleteSupply(id) {
+function deleteCategory(id) {
     $('#deleteItemModal').modal('show');
     $('#deleteButton').click(function () {
         $.ajax({
             type: 'DELETE',
-            url: "/supply/" + id,
+            url: "/category/" + id,
             cache: false,
             timeout: 60000,
             success: function (data) {
@@ -72,58 +65,43 @@ function deleteSupply(id) {
     });
 }
 
-function getSupplyForm() {
-    let supply = {};
+function getCategoryForm() {
+    let category = {};
     let name = $('#name').val();
-    let phone = $('#phone').val();
-    let email = $('#email').val();
-    let address = $('#address').val();
     let detail = $('#detail').val();
     let id = $('#id').val();
     let active = $('#active').val() == null ? 0 : $('#active').val();
     let nameOld = $('#nameOld').val();
-    let deleted = $('#deleted').val();
-    supply['id'] = id;
-    supply['name'] = name;
-    supply['phone'] = phone;
-    supply['email'] = email;
-    supply['address'] = address;
-    supply['detail'] = detail;
-    supply['nameOld'] = nameOld;
-    supply['active'] = active;
-    supply['deleted'] = deleted;
-    return supply;
+    category['id'] = id;
+    category['name'] = name;
+    category['detail'] = detail;
+    category['nameOld'] = nameOld;
+    category['active'] = active;
+    return category;
 }
 
-function setEmptySupply() {
+function setEmptyCategory() {
     $('#name').val('');
-    $('#phone').val('');
-    $('#email').val('');
-    $('#address').val('');
     $('#detail').val('');
     $('#id').val('');
     $('#active').val('');
     $('#nameOld').val('');
-    $('#deleted').val('')
 }
 
-function setDataSupply(supply) {
-    $('#name').val(supply['name']);
-    $('#phone').val(supply['phone']);
-    $('#email').val(supply['email']);
-    $('#address').val(supply['address']);
-    $('#detail').val(supply['detail']);
-    $('#id').val(supply['id']);
-    $('#active').val(supply['active']);
-    $('#nameOld').val(supply['name']);
-    $('#deleted').val(supply["deleted"])
+function setDataCategory(category) {
+    $('#name').val(category['name']);
+    $('#detail').val(category['detail']);
+    $('#id').val(category['id']);
+    $('#active').val(category['active']);
+    $('#nameOld').val(category['name']);
 }
+
 
 function hideElementError(id) {
     $('#' + id).keyup(function () {
         hideError(id);
     });
-    $('#' + id).change(function () {
+    $('#' + id ).change(function () {
         hideError(id);
     });
     $('#' + id).focusin(function () {
@@ -131,13 +109,12 @@ function hideElementError(id) {
     });
 }
 
-function resetErrorSupply() {
+function resetErrorCategory() {
     hideElementError('id');
     hideElementError('name');
-    hideElementError('phone');
-    hideElementError('email');
-    hideElementError('address');
     hideElementError('detail');
     hideElementError('nameOld');
 }
+
+
 
