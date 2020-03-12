@@ -62,10 +62,11 @@
                                             </div>
                                         </td>
                                         <td class="text-primary">
-                                            <a href="javascript:void(0)" th:onclick="'editSupply('+${advertise.id}+')'"><i
+                                            <a href="javascript:void(0)"
+                                               th:onclick="'editAdvertise('+${advertise.id}+')'"><i
                                                     class="far fa-edit"></i></a>
                                             <a href="javascript:void(0)"
-                                               th:onclick="'deleteSupply('+${advertise.id}+')'"><i
+                                               th:onclick="'deleteAdvertise('+${advertise.id}+')'"><i
                                                     class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -118,9 +119,8 @@
                         <input type="hidden" id="id">
                         <input type="hidden" id="active">
                     </div>
-                    <div>
-                        <img src="/images/background_login.jpg" id="image_view" class="align-content-md-center"
-                             style="width:100px;height: 100px;border-radius:100%;">
+                    <div class="card card-body">
+                        <img src="/images/background_login.jpg" id="image_view" class="card-img-top">
                     </div>
                     <div class="md-form mb-5">
                         <textarea type="text" id="content" class="md-textarea form-control" rows="4"></textarea>
