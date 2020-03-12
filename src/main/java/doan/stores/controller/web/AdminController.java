@@ -1,10 +1,13 @@
 package doan.stores.controller.web;
 
+import doan.stores.bussiness.SupplyService;
 import doan.stores.bussiness.UserService;
 import doan.stores.bussiness.implement.CommonService;
+import doan.stores.domain.Supply;
 import doan.stores.domain.User;
 import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.response.ErrorResponse;
+import doan.stores.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +36,9 @@ public class AdminController {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private SupplyService supplyService;
 
     @GetMapping("/home")
     public ModelAndView viewHome() {
@@ -114,7 +120,9 @@ public class AdminController {
     public ModelAndView viewSupply() {
         ModelAndView mav = new ModelAndView();
         User user = commonService.getPrincipal();
+        List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
         mav.addObject("user", user);
+        mav.addObject("supplies", supplies);
         mav.setViewName("admin/supply/list");
         return mav;
     }

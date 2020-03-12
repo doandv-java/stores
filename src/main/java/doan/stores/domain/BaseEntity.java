@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Data
 @EnableJpaAuditing
-public abstract class BaseEntity implements Serializable {
+public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 6010339256504929188L;
 
     @Temporal(TemporalType.TIMESTAMP)

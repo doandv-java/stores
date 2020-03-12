@@ -3,17 +3,14 @@ package doan.stores.dto.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class SupplyRequest {
 
     private Long id;
 
-    @NotNull(message = "Tên nhà cung cấp không thể để trống")
+    @NotBlank(message = "Tên nhà cung cấp không thể để trống")
     private String name;
-
-    private String description;
 
     @NotBlank(message = "Số điện thoại không hợp lệ")
     private String phone;
@@ -23,7 +20,11 @@ public class SupplyRequest {
 
     private String address;
 
+    private String detail;
+
     private int active;
+
+    private int deleted;
 
     private String nameOld;
 }

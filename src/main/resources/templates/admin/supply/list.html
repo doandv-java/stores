@@ -50,23 +50,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Jacob</td>
-                                        <td>Jacob</td>
-                                        <td>53275531</td>
-                                        <td>12 May 2017</td>
-                                        <td>12 May 2017</td>
+                                    <tr th:each="supply:${supplies}" th:id="${supply.id}">
+                                        <td th:text="${supply.name}"></td>
+                                        <td th:text="${supply.detail}"></td>
+                                        <td th:text="${supply.phone}"></td>
+                                        <td th:text="${supply.email}"></td>
+                                        <td th:text="${supply.address}"></td>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="defaultChecked2"
-                                                       checked>
-                                                <label class="custom-control-label" for="defaultChecked2"></label>
+                                                <input type="checkbox" class="custom-control-input" id="activeCheck"
+                                                       th:checked="${supply.active==1}"
+                                                       th:onchange="'changeActive('+${supply.id}+')'">
+                                                <label class="custom-control-label" for="activeCheck"></label>
                                             </div>
                                         </td>
                                         <td class="text-primary">
-                                            <a href="javascript:void(0)" onclick="editSupply()"><i
+                                            <a href="javascript:void(0)" th:onclick="'editSupply('+${supply.id}+')'"><i
                                                     class="far fa-edit"></i></a>
-                                            <a href="javascript:void(0)" onclick="deleteSupply()"><i
+                                            <a href="javascript:void(0)"
+                                               th:onclick="'deleteSupply('+${supply.id}+')'"><i
                                                     class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -118,31 +120,33 @@
                     <div>
                         <input type="hidden" id="id">
                         <input type="hidden" id="nameOld">
+                        <input type="hidden" id="deleted">
+                        <input type="hidden" id="active">
                     </div>
                     <div class="md-form mb-5">
-                        <input type="text" id="name" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="name">Tên</label>
-                        <p class="error" id="name_errors">Validate</p>
+                        <input type="text" id="name" class="form-control">
+                        <label for="name">Tên</label>
+                        <p class="error" id="name_errors"></p>
                     </div>
                     <div class="md-form mb-5">
-                        <input type="text" id="phone" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="phone">Số điện thoại</label>
-                        <p class="error" id="phone_errors">Validate</p>
+                        <input type="text" id="phone" class="form-control">
+                        <label for="phone">Số điện thoại</label>
+                        <p class="error" id="phone_errors"></p>
                     </div>
                     <div class="md-form mb-5">
-                        <input type="email" id="email" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="email">Email</label>
-                        <p class="error" id="email_errors">Validate</p>
+                        <input type="email" id="email" class="form-control ">
+                        <label for="email">Email</label>
+                        <p class="error" id="email_errors"></p>
                     </div>
                     <div class="md-form mb-5">
-                        <input type="text" id="address" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="address">Địa chỉ</label>
-                        <p class="error" id="address_errors">Validate</p>
+                        <input type="text" id="address" class="form-control">
+                        <label for="address">Địa chỉ</label>
+                        <p class="error" id="address_errors"></p>
                     </div>
                     <div class="md-form mb-5">
                         <textarea type="text" id="detail" class="md-textarea form-control" rows="4"></textarea>
-                        <label data-error="wrong" data-success="right" for="detail">Mô tả chi tiết</label>
-                        <p class="error" id="detail_errors">Validate</p>
+                        <label for="detail">Mô tả chi tiết</label>
+                        <p class="error" id="detail_errors"></p>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">

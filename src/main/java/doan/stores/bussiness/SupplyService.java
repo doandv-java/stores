@@ -7,11 +7,15 @@ import java.util.List;
 
 public interface SupplyService {
 
-    List<Supply> findSupplies();
+    List<Supply> findSuppliesByDeleted(int deleted);
 
     void saveSupply(SupplyRequest request);
 
     void deleteSupply(Long id);
 
     boolean existsSupply(String name, String nameOld);
+
+    Supply findSupplyById(Long id);
+
+    void changeActive(Long id, int active);
 }

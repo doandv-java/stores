@@ -4,6 +4,8 @@ import doan.stores.bussiness.SupplyService;
 import doan.stores.domain.Supply;
 import doan.stores.dto.request.SupplyRequest;
 import doan.stores.persistenct.SupplyRepository;
+import doan.stores.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,8 @@ public class SupplyServiceImpl implements SupplyService {
     private SupplyRepository supplyRepository;
 
     @Override
-    public List<Supply> findSupplies() {
-        return supplyRepository.findAll();
+    public List<Supply> findSuppliesByDeleted(int deleted) {
+        return supplyRepository.findSuppliesByDeletedIs(deleted);
     }
 
     @Override
@@ -25,21 +27,47 @@ public class SupplyServiceImpl implements SupplyService {
         Supply supply = new Supply();
         supply.setId(request.getId());
         supply.setName(request.getName());
-        supply.setDescription(request.getDescription());
+        supply.setDetail(request.getDetail());
         supply.setPhone(request.getPhone());
         supply.setEmail(request.getEmail());
         supply.setAddress(request.getAddress());
         supply.setActive(request.getActive());
+        supply.setDeleted(request.getDeleted());
         supplyRepository.save(supply);
     }
 
     @Override
     public void deleteSupply(Long id) {
+        Supply supply = supplyRepository.getOne(id);
+        supply.setDeleted(Constants.DELETE.TRUE);
+        supplyRepository.save(supply);
+    }
 
+    @Override
+    public Supply findSupplyById(Long id) {
+        return supplyRepository.getOne(id);
+    }
+
+
+    @Override
+    public void changeActive(Long id, int active) {
+        Supply supply = supplyRepository.getOne(id);
+        supply.setActive(active);
+        supplyRepository.save(supply);
     }
 
     @Override
     public boolean existsSupply(String name, String nameOld) {
+        if (!StringUtils.isEmpty(name)) {
+            Supply flag = supplyRepository.findSupplyByNameIsAndDeletedIs(name, Constants.DELETE.FALSE);
+            if (StringUtils.isEmpty(nameOld)) {
+                return flag != null;
+            } else {
+                boolean check = name.equals(nameOld) || flag == null;
+                return !check;
+            }
+        }
         return false;
     }
+
 }
