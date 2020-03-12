@@ -1,9 +1,11 @@
 package doan.stores.controller.web;
 
+import doan.stores.bussiness.AdvertiseService;
 import doan.stores.bussiness.CategoryService;
 import doan.stores.bussiness.SupplyService;
 import doan.stores.bussiness.UserService;
 import doan.stores.bussiness.implement.CommonService;
+import doan.stores.domain.Advertise;
 import doan.stores.domain.Category;
 import doan.stores.domain.Supply;
 import doan.stores.domain.User;
@@ -44,6 +46,9 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AdvertiseService advertiseService;
 
     @GetMapping("/home")
     public ModelAndView viewHome() {
@@ -121,6 +126,10 @@ public class AdminController {
     @GetMapping("/advertise")
     public ModelAndView viewAdvertise() {
         ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        List<Advertise> advertises = advertiseService.findAllAdvertise();
+        mav.addObject("user", user);
+        mav.addObject("advertises", advertises);
         mav.setViewName("admin/advertise/list");
         return mav;
     }
