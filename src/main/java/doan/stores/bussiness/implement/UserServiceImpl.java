@@ -5,6 +5,7 @@ import doan.stores.bussiness.UserService;
 import doan.stores.domain.User;
 import doan.stores.domain.UserPrincipal;
 import doan.stores.dto.request.UserRequest;
+import doan.stores.enums.RoleEnum;
 import doan.stores.persistenct.UserRepository;
 import doan.stores.utils.Constants;
 import doan.stores.utils.Dates;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,10 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserRequest request) {
-        User user = userRepository.getOne(request.getId());
-        if (user == null) {
+        User user;
+        if (request.getId() == null) {
             user = new User();
             user.setPassword(passwordEncoder.encode(Constants.PASS_RANDOM));
+        } else {
+            user = userRepository.getOne(request.getId());
         }
         user.setUserName(request.getUserName());
         user.setName(request.getName());
@@ -63,6 +67,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUserName(String userName) {
         return userRepository.findUserByUserNameIs(userName);
+    }
+
+    @Override
+    public UserRequest findUserById(Long id) {
+        if (id == null) {
+            return new UserRequest();
+        } else {
+            User user = userRepository.getOne(id);
+            UserRequest request = new UserRequest();
+            request.setId(user.getId());
+            request.setAddress(user.getAddress());
+            if (user.getBirthDay() != null) {
+                request.setBirthDay(Dates.format(user.getBirthDay(), Constants.DATE_FORMAT.YYYY_MM_DD));
+            }
+            request.setGender(user.getGender());
+            request.setImageLink(user.getImageLink());
+            request.setName(user.getName());
+            request.setUserName(user.getUserName());
+            request.setRole(user.getRole());
+            request.setUserNameOld(user.getUserName());
+            request.setPhone(user.getPhone());
+            request.setState(user.getState());
+            request.setDeleted(user.getDeleted());
+            return request;
+        }
+    }
+
+    @Override
+    public List<User> findUsersByRole(RoleEnum role) {
+        return userRepository.findUsersByRoleEqualsAndDeleted(role.getText(), Constants.DELETE.FALSE);
     }
 
     @Override

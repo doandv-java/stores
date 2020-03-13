@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
@@ -13,7 +12,7 @@ public class UserRequest {
 
     private Long id;
 
-    @NotNull(message = "Email không được để trống")
+    @NotBlank(message = "Email không được để trống")
     private String userName;
 
 
@@ -25,7 +24,7 @@ public class UserRequest {
     private String name;
 
     @Date(pattern = "yyyy-MM-dd", message = "Ngày sinh chưa hợp lệ")
-    @NotNull(message = "Vui lòng nhập ngày sinh")
+    @NotBlank(message = "Vui lòng nhập ngày sinh")
     private String birthDay;
 
     private int gender;

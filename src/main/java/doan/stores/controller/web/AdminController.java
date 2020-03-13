@@ -11,6 +11,7 @@ import doan.stores.domain.Supply;
 import doan.stores.domain.User;
 import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.response.ErrorResponse;
+import doan.stores.enums.RoleEnum;
 import doan.stores.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -94,7 +96,34 @@ public class AdminController {
     @GetMapping("/employee")
     public ModelAndView viewEmployee() {
         ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        List<User> employees = userService.findUsersByRole(RoleEnum.ROLE_EMP);
+        mav.addObject("user", user);
+        mav.addObject("employees", employees);
         mav.setViewName("admin/employee/list");
+        return mav;
+    }
+
+    @GetMapping(path = "/employee/{id}")
+    public ModelAndView viewEmployeeForm(@PathVariable("id") Long id) {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        UserRequest employee = userService.findUserById(id);
+        mav.addObject("user", user);
+        mav.addObject("employee", employee);
+        mav.setViewName("admin/employee/form");
+        return mav;
+    }
+
+    @GetMapping(path = "/employee/")
+    public ModelAndView viewEmployeeCreateForm() {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        UserRequest employee = new UserRequest();
+        employee.setRole(RoleEnum.ROLE_EMP.getText());
+        mav.addObject("user", user);
+        mav.addObject("employee",employee );
+        mav.setViewName("admin/employee/form");
         return mav;
     }
 
