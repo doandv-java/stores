@@ -34,6 +34,7 @@ public class AdvertisesController {
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = commonService.bindingResult(result);
         if (errors.isEmpty()) {
+            map.put("status", 200);
             advertiseService.saveAdvertise(request);
         } else {
             map.put("status", 101);
@@ -48,7 +49,7 @@ public class AdvertisesController {
     }
 
     @DeleteMapping("/{id}")
-    public Map<String, Object> deleteAdvertise(Long id) {
+    public Map<String, Object> deleteAdvertise(@PathVariable("id") Long id) {
         Map<String, Object> map = new HashMap<>();
         Advertise advertise = advertiseService.findAdvertiseById(id);
         if (advertise == null) {

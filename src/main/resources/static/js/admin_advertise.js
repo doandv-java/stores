@@ -21,7 +21,7 @@ $(document).ready(function () {
                 if (result.status === 200) {
                     setEmptyAdvertise();
                     $('#advertiseModal').modal('hide');
-                    window.location.href = window.location.origin + "/admin/profile";
+                    window.location.href = window.location.origin + "/admin/advertise";
                 } else {
                     let arrError = result.errors;
                     for (let i = 0; i < arrError.length; i++) {
@@ -83,7 +83,7 @@ function getAdvertiseForm() {
     let image = $('#image').prop('files')[0];
     let imageLink = $('#imageLink').val();
     let id = $('#id').val();
-    let active = $('#active').val() == null ? 0 : $('#active').val();
+    let active = $('#active').val() == '' ? 0 : $('#active').val();
     advertise.set("id", id);
     advertise.set("image", image == null ? emptyFile : image);
     advertise.set("imageLink", imageLink);
@@ -94,17 +94,16 @@ function getAdvertiseForm() {
 
 function setEmptyAdvertise() {
     $('#id').val('');
-    $('#active').val('');
     $('#content').val('');
     $('#imageLink').val('');
 }
 
 function setDataAdvertise(data) {
-    $('#id').val(data['name']);
+    $('#id').val(data['id']);
     $('#content').val(data['content']);
     $('#imageLink').val(data['imageLink']);
     $('#active').val(data['active']);
-    $('#image_view').src = data['imageLink'];
+    $('#image_view').attr('src', data['imageLink']);
 }
 
 function resetErrorAdvetise() {
