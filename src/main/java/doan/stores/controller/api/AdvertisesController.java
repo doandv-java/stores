@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +30,7 @@ public class AdvertisesController {
     private AdvertiseService advertiseService;
 
     @PostMapping("")
-    public Map<String, Object> getListAdvertise(@RequestBody @Valid AdvertiseRequest request, BindingResult result) {
+    public Map<String, Object> getListAdvertise(@Valid AdvertiseRequest request, BindingResult result) {
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = commonService.bindingResult(result);
         if (errors.isEmpty()) {

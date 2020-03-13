@@ -5,34 +5,63 @@ $(document).ready(function () {
     $('#image').change(function () {
         loadImage(this, 'image_view');
     });
+
+    resetErrorAdvetise();
+
+    $('#submitBtn').click(function () {
+        $('.error').text('');
+        let advertise = getAdvertiseForm();
+        $.ajax({
+            type: 'POST',
+            url: '/advertise',
+            contentType: false,
+            processData: false,
+            data: advertise,
+            success: function (result) {
+                if (result.status === 200) {
+                    setEmptyAdvertise();
+                    $('#advertiseModal').modal('hide');
+                    window.location.href = window.location.origin + "/admin/profile";
+                } else {
+                    let arrError = result.errors;
+                    for (let i = 0; i < arrError.length; i++) {
+                        showError(arrError[i].field, arrError[i].message);
+                    }
+                }
+            }
+        });
+    });
+
 });
 
 function changeActive(id) {
     let active = $('#' + id + 'active').prop('checked') === true ? 1 : 0;
+    $('#active').val(active);
     $.ajax({
         type: 'PUT',
         url: "/advertise/" + id + "/" + active
     });
 }
-function editSupply(id) {
+
+function editAdvertise(id) {
     $.ajax({
         type: 'GET',
-        url: '/supply/' + id,
+        url: '/advertise/' + id,
         cache: false,
         timeout: 60000,
         success: function (data) {
-            setDataSupply(data);
-            $('#supplyModal').modal("show");
+            setDataAdvertise(data);
+            $('#advertiseModal').modal("show");
         }
     });
 }
 
-function deleteSupply(id) {
+function deleteAdvertise(id) {
     $('#deleteItemModal').modal('show');
     $('#deleteButton').click(function () {
         $.ajax({
             type: 'DELETE',
-            url: "/supply/" + id,
+            url: "/advertise/" + id,
             cache: false,
             timeout: 60000,
             success: function (data) {
@@ -47,51 +76,40 @@ function deleteSupply(id) {
     });
 }
 
-function getSupplyForm() {
-    let supply = {};
-    let name = $('#name').val();
-    let phone = $('#phone').val();
-    let email = $('#email').val();
-    let address = $('#address').val();
-    let detail = $('#detail').val();
+function getAdvertiseForm() {
+    let emptyFile = new File([], "test.png", {type: 'image/jpg'});
+    let advertise = new FormData();
+    let content = $('#content').val();
+    let image = $('#image').prop('files')[0];
+    let imageLink = $('#imageLink').val();
     let id = $('#id').val();
     let active = $('#active').val() == null ? 0 : $('#active').val();
-    let nameOld = $('#nameOld').val();
-    let deleted = $('#deleted').val();
-    supply['id'] = id;
-    supply['name'] = name;
-    supply['phone'] = phone;
-    supply['email'] = email;
-    supply['address'] = address;
-    supply['detail'] = detail;
-    supply['nameOld'] = nameOld;
-    supply['active'] = active;
-    supply['deleted'] = deleted;
-    return supply;
+    advertise.set("id", id);
+    advertise.set("image", image == null ? emptyFile : image);
+    advertise.set("imageLink", imageLink);
+    advertise.set("content", content);
+    advertise.set("active", active);
+    return advertise;
 }
 
-function setEmptySupply() {
-    $('#name').val('');
-    $('#phone').val('');
-    $('#email').val('');
-    $('#address').val('');
-    $('#detail').val('');
+function setEmptyAdvertise() {
     $('#id').val('');
     $('#active').val('');
-    $('#nameOld').val('');
-    $('#deleted').val('')
+    $('#content').val('');
+    $('#imageLink').val('');
 }
 
-function setDataSupply(supply) {
-    $('#name').val(supply['name']);
-    $('#phone').val(supply['phone']);
-    $('#email').val(supply['email']);
-    $('#address').val(supply['address']);
-    $('#detail').val(supply['detail']);
-    $('#id').val(supply['id']);
-    $('#active').val(supply['active']);
-    $('#nameOld').val(supply['name']);
-    $('#deleted').val(supply["deleted"])
+function setDataAdvertise(data) {
+    $('#id').val(data['name']);
+    $('#content').val(data['content']);
+    $('#imageLink').val(data['imageLink']);
+    $('#active').val(data['active']);
+    $('#image_view').src = data['imageLink'];
+}
+
+function resetErrorAdvetise() {
+    hideElementError('id');
+    hideElementError('content');
 }
 
 function hideElementError(id) {
@@ -104,15 +122,5 @@ function hideElementError(id) {
     $('#' + id).focusin(function () {
         hideError(id);
     });
-}
-
-function resetErrorSupply() {
-    hideElementError('id');
-    hideElementError('name');
-    hideElementError('phone');
-    hideElementError('email');
-    hideElementError('address');
-    hideElementError('detail');
-    hideElementError('nameOld');
 }
 
