@@ -12,4 +12,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findCategoryByNameEqualsAndActiveIs(String name, int active);
 
     List<Category> findCategoriesByActiveIs(int active);
+
+    Category findCategoryByNameIs(String name);
+
+    Category findCategoryById(Long id);
 }

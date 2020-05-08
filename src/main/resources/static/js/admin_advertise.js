@@ -1,12 +1,14 @@
 $(document).ready(function () {
 
-    $('#advertiseTable').dataTable();
-
+    $('#advertiseTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+    });
+    resetErrorAdvetise();
     $('#image').change(function () {
         loadImage(this, 'image_view');
     });
 
-    resetErrorAdvetise();
 
     $('#submitBtn').click(function () {
         $('.error').text('');
@@ -24,6 +26,7 @@ $(document).ready(function () {
                     window.location.href = window.location.origin + "/admin/advertise";
                 } else {
                     let arrError = result.errors;
+
                     for (let i = 0; i < arrError.length; i++) {
                         showError(arrError[i].field, arrError[i].message);
                     }
@@ -70,6 +73,7 @@ function deleteAdvertise(id) {
                 } else {
                     $('#deleteItemModal').modal('hide');
                     $('#' + id).remove();
+                    window.location.href = window.location.origin + '/admin/advertise'
                 }
             }
         })

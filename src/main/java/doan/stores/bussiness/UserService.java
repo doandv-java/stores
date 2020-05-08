@@ -16,6 +16,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> findUsersByRole(RoleEnum role);
 
+    boolean deleteEmployee(Long id);
+
     void changePassword(String userName, String passwordNew);
 
     boolean checkPassword(String userName, String password);

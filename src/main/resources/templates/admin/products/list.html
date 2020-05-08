@@ -32,35 +32,40 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title text-center">Danh sách nhân viên</h4>
+                            <h4 class="card-title text-center">Danh sách sản phẩm</h4>
                             <div class="table-striped table-fixed">
-                                <table class="table text-center" id="employeeTable">
+                                <table class="table text-center" id="productTable">
                                     <thead>
                                     <tr>
                                         <th>Ảnh</th>
-                                        <th>Email</th>
                                         <th>Tên</th>
-                                        <th>Ngày sinh</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
+                                        <th>Nhà cung cấp</th>
+                                        <th>Loại sản phẩm</th>
+                                        <th>Hệ điều hành</th>
+                                        <th>CPU</th>
+                                        <th>RAM</th>
+                                        <th>Ngày phát hành</th>
                                         <th class="text-primary">
-                                            <a th:href="@{/admin/employee/}"><i class="far fa-plus-square"></i></a>
+                                            <a th:href="@{/admin/product/}"><i class="far fa-plus-square"></i></a>
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="employee :${employees}" th:id="${employee.id}">
-                                        <td class="ui-icon-image"><img  style="width:80px; height: 80px;" th:src="${employee.imageLink}"></td>
-                                        <td th:text="${employee.userName}"></td>
-                                        <td th:text="${employee.name}"></td>
-                                        <td th:text="${#dates.format(employee.birthDay,'dd/MM/yyyy')}"></td>
-                                        <td th:text="${employee.phone}"></td>
-                                        <td th:text="${employee.address}"></td>
+                                    <tr th:each="product :${products}" th:id="${product.id}">
+                                        <td class="ui-icon-image"><img style="width:80px; height: 80px;"
+                                                                       th:src="${product.imageLink}"></td>
+                                        <td th:text="${product.name}"></td>
+                                        <td th:text="${product.producer}"></td>
+                                        <td th:text="${product.getCategory().getName()}"></td>
+                                        <td th:text="${product.os}"></td>
+                                        <td th:text="${product.cpu}"></td>
+                                        <td th:text="${product.ram}"></td>
+                                        <td th:text="${product.releaseYear}"></td>
                                         <td class="text-primary">
-                                            <a th:href="@{'/admin/employee/'+${employee.id}}"><i
+                                            <a th:href="@{'/admin/product/'+${product.id}}"><i
                                                     class="far fa-edit"></i></a>
                                             <a href="javascript:void(0)"
-                                               th:onclick="'deleteEmployee('+${employee.id}+')'"><i
+                                               th:onclick="'deleteProduct('+${product.id}+')'"><i
                                                     class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -88,7 +93,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn muốn xóa nhân viên phải không?</p>
+                    <p>Bạn muốn xóa sản phẩm phải không?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -102,7 +107,7 @@
     <th:block th:replace="admin/fragments/footer::footer"/>
     <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
     <!--/.Footer-->
-    <script th:src="@{/js/admin_employee.js}"></script>
+    <script th:src="@{/js/admin_product.js}"></script>
 </div>
 </body>
 </html>

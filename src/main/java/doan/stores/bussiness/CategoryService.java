@@ -13,6 +13,8 @@ public interface CategoryService {
 
     Category findCategoryByNameAndActive(String name, int active);
 
+    Category findCategoryByName(String name);
+
     Category findCategoryById(Long id);
 
     void deleteCategory(Long id);

@@ -49,7 +49,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="advertise:${advertises}" th:id="${advertise.id}">
-                                        <td><img th:src="${advertise.imageLink}"></td>
+                                        <td><img style="width: 80px;height: 80px;" th:src="${advertise.imageLink}"></td>
                                         <td th:text="${advertise.content}"></td>
                                         <td>
                                             <div class="custom-control custom-checkbox">

@@ -47,7 +47,12 @@ public class AdvertiseServiceImpl implements AdvertiseService {
     @Override
     public void deleteAdvertise(Long id) {
         Advertise advertise = advertiseRepository.getOne(id);
-        advertiseRepository.delete(advertise);
+        if (advertise.getActive() == 1) {
+            advertise.setActive(0);
+            advertiseRepository.save(advertise);
+        } else {
+            advertiseRepository.delete(advertise);
+        }
     }
 
     @Override

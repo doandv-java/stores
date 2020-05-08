@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
-    $('#supplyTable').dataTable();
+    $('#supplyTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+    });
 
     resetErrorSupply();
 
@@ -66,6 +69,7 @@ function deleteSupply(id) {
                 } else {
                     $('#deleteItemModal').modal('hide');
                     $('#' + id).remove();
+                    window.location.href=window.location.origin+'/admin/supply'
                 }
             }
         })

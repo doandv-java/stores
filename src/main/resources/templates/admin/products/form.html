@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doan Stores</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="container-for-admin">
+    <!--Main Navigation-->
+    <th:block th:replace="admin/fragments/header::header(${user})"/>
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="pt-5 mx-lg-5">
+        <div class="container-fluid mt-5">
+            <form class="forms-sample" id="productForm" th:object="${product}">
+                <div class="row">
+                    <input type="hidden" id="id" th:value="${product.id}">
+                    <!--                                    <input type="hidden" id="role" th:value="${produc.role}">-->
+                    <input type="hidden" id="imageLink" th:value="${product.imageLink}">
+                    <!--                                    <input type="hidden" id="state" th:value="${produc.state}">-->
+                    <input type="hidden" id="deleted" th:value="${product.deleted}">
+                    <input type="hidden" id="nameOld" th:value="${product.nameOld}">
+                </div>
+                <div class="row">
+                    <div class="col-sm-3  text-center">
+                        <img src="http://placehold.it/380x500" th:src="@{${product.imageLink}}" id="image_view" alt=""
+                             width="80%" height="50%"
+                             class="img-rounded img-responsive">
+                        <div>
+                            <h4 th:text="${product.name}"></h4>
+                            <small><cite th:title="${product.producer}"></cite></small>
+                        </div>
+
+                    </div>
+                    <!--                <div class="col-sm-9 grid-margin stretch-card">-->
+                    <!--                    <div class="card">-->
+                    <!--                        <div class="card-body">-->
+                    <!--                            <form class="forms-sample" id="productForm">-->
+
+                    <div class="form-group col-3">
+                        <label for="name">Tên</label>
+                        <input type="text" class="form-control" id="name"
+                               placeholder="Tên sản phẩm" th:value="${product.name}">
+                        <p id="name_errors" class="error"></p>
+                    </div>
+
+                    <div class="form-group col-3">
+                        <label for="producer">Hãng sản xuất</label>
+                        <select class="form-control" id="producer" name="status">
+                            <option th:each="supply : ${supplies}" th:value="${supply.name}"
+                                    th:text="${supply.name}"></option>
+                        </select>
+                        <p id="producer_errors" class="error"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-3">
+                        <label for="categoryId">Loại sản phẩm</label>
+                        <select class="form-control" id="categoryId" name="status" th:fields="*{categoryId}">
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+                        <p id="categoryId_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="os">Hệ điều hành</label>
+                        <select class="form-control" id="os" name="status">
+                            <option th:value="Window" th:text="Window"
+                                    th:selected='${product.os=="Window"}'></option>
+                            <option th:value="Linux" th:text="Linux"
+                                    th:selected='${product.os=="Linux"}'></option>
+                            <option th:value="MacOS" th:text="MacOS"
+                                    th:selected='${product.os=="MacOS"}'></option>
+                        </select>
+                        <p id="os_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="cpu">CPU</label>
+                        <input type="text" class="form-control" id="cpu"
+                               placeholder="CPU" th:value="${product.cpu}">
+                        <p id="cpu_errors" class="error"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-3">
+                        <label for="ram">Ram</label>
+                        <input type="text" class="form-control" id="ram"
+                               placeholder="RAM" th:value="${product.ram}">
+                        <p id="ram_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="price">Giá</label>
+                        <input type="text" class="form-control" id="price" placeholder="Giá"
+                               th:value="${product.price}">
+                        <p id="price_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="weight">Trọng lượng</label>
+                        <input type="text" class="form-control" id="weight" placeholder="Trọng lượng"
+                               th:value="${product.weight}">
+                        <p id="weight_errors" class="error"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-3">
+                        <label for="storage">Dung lượng</label>
+                        <input type="text" class="form-control" id="storage" placeholder="Dung lượng"
+                               th:value="${product.storage}">
+                        <p id="storage_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="screen">Màn hình</label>
+                        <input type="text" class="form-control" id="screen" placeholder="Màn hình"
+                               th:value="${product.screen}">
+                        <p id="screen_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="releaseYear">Năm phát hành</label>
+                        <input type="text" class="form-control" id="releaseYear" placeholder="Năm phát hành"
+                               th:value="${product.releaseYear}">
+                        <p id="releaseYear_errors" class="error"></p>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="form-group col-3">
+                        <label for="gpu">CPU</label>
+                        <input type="text" class="form-control" id="gpu"
+                               placeholder="GPU" th:value="${product.gpu}">
+                        <p id="gpu_errors" class="error"></p>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="detail">Mô tả</label>
+                        <textarea class="form-control col-6" placeholder="Mô tả" id="detail" th:text="${product.detail}">
+
+                        </textarea>
+                        <p id="detail_errors" class="error"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Ảnh sản phẩm</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="image"
+                                       aria-describedby="inputGroupFileAddon01"
+                                       th:value="${product.image}">
+                                <label class="custom-file-label" for="image">Choose image</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <button type="button" class="btn btn-primary mr-2" id="submitBtn">Lưu</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn"><a>Hủy bỏ</a></button>
+                </div>
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+            </form>
+        </div>
+
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <th:block th:replace="admin/fragments/footer::footer"/>
+    <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
+
+    <script th:src="@{/js/admin_product.js}"></script>
+    <!--/.Footer-->
+</div>
+</body>
+</html>

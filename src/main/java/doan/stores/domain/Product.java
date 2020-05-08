@@ -61,4 +61,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "release_year")
     private String releaseYear;
+
+    @Column(name = "deleted")
+    private int deleted;
 }

@@ -100,6 +100,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean deleteEmployee(Long id) {
+        User flag = userRepository.getOne(id);
+        if (flag == null) {
+            return false;
+        } else {
+            flag.setDeleted(Constants.DELETE.TRUE);
+            userRepository.save(flag);
+            return true;
+        }
+    }
+
+    @Override
     public void changePassword(String userName, String passwordNew) {
         User user = userRepository.findUserByUserNameIs(userName);
         user.setPassword(passwordEncoder.encode(passwordNew));

@@ -48,8 +48,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findCategoryByNameIs(name);
+    }
+
+    @Override
     public Category findCategoryById(Long id) {
-        return categoryRepository.getOne(id);
+        return categoryRepository.findCategoryById(id);
     }
 
     @Override

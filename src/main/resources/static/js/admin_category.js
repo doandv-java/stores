@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
-    $('#categoryTable').dataTable();
+    $('#categoryTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+    });
 
     resetErrorCategory();
 
@@ -67,6 +70,7 @@ function deleteCategory(id) {
                 } else {
                     $('#deleteItemModal').modal('hide');
                     $('#' + id).remove();
+                    window.location.href=window.location.origin+'/admin/category'
                 }
             }
         })

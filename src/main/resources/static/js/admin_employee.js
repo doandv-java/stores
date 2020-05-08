@@ -1,5 +1,8 @@
 $(document).ready(function () {
-    $('#employeeTable').dataTable();
+    $('#employeeTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+    });
 
     $('#submitBtn').click(function () {
         $('.error').text('');
@@ -29,7 +32,26 @@ $(document).ready(function () {
 
     resetErrorProfile();
 });
-
+function  deleteEmployee(id) {
+    $('#deleteItemModal').modal('show');
+    $('#deleteButton').click(function () {
+        $.ajax({
+            type: 'DELETE',
+            url: "/employee/" + id,
+            cache: false,
+            timeout: 60000,
+            success: function (data) {
+                if (data.status === 101) {
+                    console.log("error");
+                } else {
+                    $('#deleteItemModal').modal('hide');
+                    $('#' + id).remove();
+                    window.location.href=window.location.origin+'/admin/employee'
+                }
+            }
+        })
+    });
+}
 function getDataProfile() {
     let emptyFile = new File([], "test.png", {type: 'image/jpg'});
     let name = $('#name');

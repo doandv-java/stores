@@ -10,4 +10,12 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCategoryId(long categoryId);
+
+    List<Product> findProductsByDeletedIs(int deleted);
+
+    Product findProductById(Long id);
+
+    Product findProductByNameIsAndDeletedIs(String name, int deleted);
+
+
 }
