@@ -2,6 +2,8 @@ package doan.stores.bussiness.implement;
 
 import doan.stores.bussiness.ProductService;
 import doan.stores.bussiness.WarehouseService;
+import doan.stores.domain.Product;
+import doan.stores.domain.User;
 import doan.stores.domain.Warehouse;
 import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.persistenct.WarehouseRepository;
@@ -49,8 +51,19 @@ public class WarehouseServiceImpl implements WarehouseService {
             warehouse = warehouseRepository.getOne(warehouseRequest.getId());
             warehouse.setQuantity(warehouseRequest.getQuantity());
         }
+        Product product = productService.findProductById(warehouseRequest.getProductId());
+        warehouse.setProduct(product);
+        warehouse.setProductId(product.getId());
         warehouse.setLastUpdate(Dates.now());
-        warehouse.setUserId(commonService.getPrincipal().getId());
+        User user = commonService.getPrincipal();
+        warehouse.setUser(user);
+        warehouse.setUserId(user.getId());
         warehouseRepository.save(warehouse);
+    }
+
+    @Override
+    public List<Warehouse> top5Warehouse() {
+        List<Warehouse> warehouses = warehouseRepository.top3Warehouse();
+        return warehouses;
     }
 }

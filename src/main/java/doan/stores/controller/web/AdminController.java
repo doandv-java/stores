@@ -5,6 +5,7 @@ import doan.stores.bussiness.implement.CommonService;
 import doan.stores.domain.*;
 import doan.stores.dto.request.ProductRequest;
 import doan.stores.dto.request.UserRequest;
+import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.dto.response.ErrorResponse;
 import doan.stores.enums.RoleEnum;
 import doan.stores.utils.Constants;
@@ -54,7 +55,9 @@ public class AdminController {
         ModelAndView mav = new ModelAndView();
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserName(principal.getUsername());
+        List<Warehouse> warehouses = warehouseService.top5Warehouse();
         mav.addObject("user", user);
+        mav.addObject("warehouses",warehouses);
         mav.setViewName("admin/home");
         return mav;
     }
@@ -238,6 +241,32 @@ public class AdminController {
         mav.addObject("warehouses", warehouses);
         mav.setViewName("admin/warehouse/list");
         return mav;
+    }
+
+    @GetMapping("/warehouse/")
+    public ModelAndView viewWarehouseForm() {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        List<Product> products = productService.findProductsByDeleted(Constants.DELETE.FALSE);
+        mav.addObject("user", user);
+        mav.addObject("products", products);
+        mav.setViewName("admin/warehouse/create");
+        return mav;
+    }
+
+    @PostMapping("/warehouse")
+    @ResponseBody
+    public Map<String, Object> updateWarehouse(@Valid @RequestBody WarehouseRequest request, BindingResult result) {
+        Map<String, Object> map = new HashMap<>();
+        List<ErrorResponse> errors = commonService.bindingResult(result);
+        if (errors.isEmpty()) {
+            warehouseService.saveWarehouse(request);
+            map.put("status", 200);
+        } else {
+            map.put("status", 101);
+            map.put("errors", errors);
+        }
+        return map;
     }
 
 }

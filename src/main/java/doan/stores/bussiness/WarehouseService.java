@@ -10,4 +10,6 @@ public interface WarehouseService {
     List<Warehouse> getWarehouses();
 
     void saveWarehouse(WarehouseRequest warehouseRequest);
+
+    List<Warehouse> top5Warehouse();
 }

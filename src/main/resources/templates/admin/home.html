@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Doan Stores</title>
     <!-- Font Awesome -->
-<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">-->
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">-->
     <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
@@ -94,8 +94,7 @@
                                 <!-- Table head -->
                                 <thead class="blue lighten-4">
                                 <tr>
-                                    <th>Hình ảnh</th>
-                                    <th>Sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
                                     <th>Loại sản phẩm</th>
                                     <th>Số lượng</th>
                                 </tr>
@@ -104,23 +103,10 @@
 
                                 <!-- Table body -->
                                 <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cell 1</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 3</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Cell 4</td>
-                                    <td>Cell 5</td>
-                                    <td>Cell 6</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Cell 7</td>
-                                    <td>Cell 8</td>
-                                    <td>Cell 9</td>
+                                <tr th:each="warehouse:${warehouses}">
+                                    <td th:text="${warehouse.product.name}" ></td>
+                                    <td th:text="${warehouse.product.category.name}"></td>
+                                    <td th:text="${warehouse.quantity}">$</td>
                                 </tr>
                                 </tbody>
                                 <!-- Table body -->

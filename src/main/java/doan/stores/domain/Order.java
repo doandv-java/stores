@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -25,6 +26,9 @@ public class Order extends BaseEntity {
     @Column(name = "status")
     private int status;
 
-    @Column(name = "total_money")
-    private double totalMoney;
+    @Column(name = "create_day")
+    private Date createDay;
+
+    @Column(name = "last_update")
+    private Date lastUpdate;
 }

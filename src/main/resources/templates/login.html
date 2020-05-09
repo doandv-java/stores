@@ -1,110 +1,137 @@
+<!DOCTYPE html >
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Doan Stores</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
-    <!-- Material Design Bootstrap -->
-    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css}">
-    <!-- Your custom styles (optional) -->
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="doanstrores">
+    <meta name="author" content="doandv">
+    <title>Login | Doan Stores</title>
+    <link th:href="@{/libs/users/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{libs/users/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/prettyPhoto.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/price-range.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/main.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/responsive.css}" rel="stylesheet">
+    <link rel="shortcut icon" th:href="@{/libs/users/images/ico/favicon.ico}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-144-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-114-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          th:href="@{/libs/users/images/ico/apple-touch-icon-72-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/libs/users/images/ico/apple-touch-icon-57-precomposed.png}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+<!--/head-->
 
-<body class="login-page" >
-
-<!-- Main Navigation -->
-<header>
-    <!-- Intro Section -->
-    <section class="view intro-2">
-        <div class="mask rgba-stylish-strong h-100 d-flex justify-content-center align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-5">
-                        <div class="card">
-                            <h5 class="card-header info-color white-text text-center py-4">
-                                <strong>Sign in</strong>
-                            </h5>
-
-                            <!--Card content-->
-                            <div class="card-body px-lg-5 pt-0">
-
-                                <!-- Form -->
-                                <form class="text-center" style="color: #757575;" th:action="@{/login}" method="post">
-                                    <p th:if="${param.error}">Đăng nhập không thành công</p>
-                                    <!-- Email -->
-                                    <div class="md-form">
-                                        <input type="email" id="materialLoginFormEmail" class="form-control"
-                                               name="username">
-                                        <label for="materialLoginFormEmail">E-mail</label>
-                                    </div>
-
-                                    <!-- Password -->
-                                    <div class="md-form">
-                                        <input type="password" id="materialLoginFormPassword" class="form-control"
-                                               name="password">
-                                        <label for="materialLoginFormPassword">Password</label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-around">
-                                        <div>
-                                            <!-- Forgot password -->
-                                            <a href="">Forgot password?</a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Sign in button -->
-                                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
-                                            type="submit">Sign in
-                                    </button>
-
-                                    <!-- Register -->
-                                    <p>Not a member?
-                                        <a href="">Register</a>
-                                    </p>
-
-                                </form>
-                                <!-- Form -->
-
-                            </div>
-
-                        </div>
-                        <!-- Material form login -->
+<body>
+<header id="header">
+    <!--header-->
+    <div class="header_top">
+        <!--header_top-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="contactinfo">
+                        <ul class="nav nav-pills">
+                            <li><a href=""><i class="fa fa-phone"></i> 0975155726</a></li>
+                            <li><a href=""><i class="fa fa-envelope"></i> doandv@gmail.com</a></li>
+                        </ul>
                     </div>
+                </div>
+                <div class="col-sm-6">
+
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Intro Section -->
+    </div>
+    <!--/header_top-->
 
+    <div class="header-middle">
+        <!--header-middle-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="logo pull-left">
+                        <a th:href="@{/home}"><img th:src="@{/libs/users/images/home/logo.png}" alt=""/></a>
+                    </div>
+                    <div class="btn-group pull-right">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--/header-middle-->
 </header>
-<!-- Main Navigation -->
+<!--/header-->
 
-<!-- SCRIPTS -->
-<!-- JQuery -->
-<script type="text/javascript"
-        th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/jquery-3.4.1.min.js}"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript"
-        th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/popper.min.js}"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript"
-        th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/bootstrap.min.js}"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/mdb.js}"></script>
-<div class="hiddendiv common"></div>
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2>Đăng nhập</h2>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger center">
+                            Đăng nhập không thành công
+                        </div>
+                    </div>
+                    <form th:action="@{/login}" method="post">
+                        <input type="email" name="username" placeholder="Email">
+                        <input type="password" name="password" placeholder="Password">
+                        <span>
+                                <a href="#" data-toggle="modal" id="forgotBtn" data-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                                <a th:href="@{/register}" class="pull-right">Tạo tài khoản mới?</a>
+                            </span>
+                        <button type="submit" class="btn btn-default">Đăng nhập</button>
+                    </form>
+                </div>
+                <!--/login form-->
+            </div>
+        </div>
+    </div>
+</section>
+<!--/form-->
 
-<!-- Custom scripts -->
-<script>
+<!--	Modal Forgot Password-->
 
-    new WOW().init();
-
-</script>
-
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center text-primary" id="modalTitle">Quên mật khẩu?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <input class="form-control" id="userName" placeholder="Email send request" type="email"/>
+                    <label class="error" id="userName_errors"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-group" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-group" id="btnSend">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/libs/users/js/jquery.js}"></script>
+<script th:src="@{/libs/users/js/price-range.js}"></script>
+<script th:src="@{/libs/users/js/jquery.scrollUp.min.js}"></script>
+<script th:src="@{/libs/users/js/bootstrap.min.js}"></script>
+<script th:src="@{/libs/users/js/jquery.prettyPhoto.js}"></script>
+<script th:src="@{/libs/users/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/forgotPass.js}"></script>
 </body>
 </html>

@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <h4 class="card-title text-center">Quản lý nhà kho</h4>
                             <div class="table-striped table-fixed">
-                                <table class="table text-center" id="productTable">
+                                <table class="table text-center" id="warehouseTable">
                                     <thead>
                                     <tr>
                                         <th>Hình ảnh</th>
@@ -43,10 +43,7 @@
                                         <th>Ngày cập nhật cuối</th>
                                         <th>Người cập nhật cuối</th>
                                         <th class="text-primary">
-                                            <a th:href="@{/admin/product/}"><i class="far fa-plus-square"></i></a>
-                                            <a href="javascript:void(0)"
-                                               th:onclick="'addWarehouse()'"><i
-                                                    class="far fa-plus-square"></i></a>
+                                            <a th:href="@{/admin/warehouse/}"><i class="far fa-plus-square"></i></a>
                                         </th>
                                     </tr>
                                     </thead>
@@ -61,7 +58,7 @@
                                         <td th:text="${warehouse.getUser().getName()}"></td>
                                         <td class="text-primary">
                                             <a href="javascript:void(0)"
-                                               th:onclick="'updateProduct('+${warehouse.id}+')'"><i
+                                               th:onclick="'updateWarehouse('+${warehouse.id}+','+${warehouse.getProductId()}+')'"><i
                                                     class="far fa-edit"></i></a>
                                         </td>
                                     </tr>
@@ -78,7 +75,7 @@
     <!--Main layout-->
 
     <!--    Modal edit create delete-->
-    <div class="modal fade" id="deleteItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="WarehouseItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -90,12 +87,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-body">
-
+                        <div class="form-group" style="display: none;" id="select_view">
+                            <label for="productSelect">Sản phẩm</label>
+                            <select class="form-control" id="productSelect" name="status">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Số lượng:</label>
+                            <input type="number" class="form-control" id="quantity" name="status">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="deleteButton">Xác nhận</button>
+                    <button type="button" class="btn btn-primary" id="ConfirmButton">Xác nhận</button>
                 </div>
             </div>
         </div>
@@ -105,7 +110,7 @@
     <th:block th:replace="admin/fragments/footer::footer"/>
     <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
     <!--/.Footer-->
-    <script th:src="@{/js/admin/admin_warehouse.js}"></script>
+    <script th:src="@{/js/admin_warehouse.js}"></script>
 </div>
 </body>
 </html>

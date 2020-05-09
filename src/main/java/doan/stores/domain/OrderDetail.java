@@ -16,12 +16,22 @@ public class OrderDetail extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "product_id")
+    @Column(name = "product_id", insertable = false, updatable = false)
     private Long productId;
 
-    @Column(name = "order_id")
+    @Column(name = "order_id", insertable = false, updatable = false)
     private Long orderId;
 
     @Column(name = "quantity")
     private int quantity;
+
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    private Product product;
+
+    @OneToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    private Order order;
+
+
 }
