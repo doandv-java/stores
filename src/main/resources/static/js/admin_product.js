@@ -39,7 +39,7 @@ function deleteProduct(id) {
     $('#deleteButton').click(function () {
         $.ajax({
             type: 'DELETE',
-            url: "/product/" + id,
+            url: '/product/' + id,
             cache: false,
             timeout: 60000,
             success: function (data) {
@@ -79,7 +79,7 @@ function getDataProduct() {
     product.set('name', name.val());
     product.set('producer', producer);
     product.set('price', price.val() == null ? 0 : (price.val()));
-    product.set('categoryId', categoryId == null ? null :(categoryId));
+    product.set('categoryId', categoryId == null ? null : (categoryId));
     product.set('detail', detail.val());
     product.set('cpu', cpu.val());
     product.set('os', os.val());

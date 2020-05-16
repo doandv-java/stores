@@ -11,5 +11,7 @@ public interface WarehouseService {
 
     void saveWarehouse(WarehouseRequest warehouseRequest);
 
+    Warehouse findWarehouse(Long productID);
+
     List<Warehouse> top5Warehouse();
 }

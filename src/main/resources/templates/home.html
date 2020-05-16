@@ -92,7 +92,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html" class="active">Home</a></li>
+                            <li><a th:href="@{/home}" class="active">Home</a></li>
                             <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li th:each="category:${categories}"><a href="#" th:text="${category.getName()}">Gamming</a>
@@ -202,26 +202,6 @@
                                 <h4 class="panel-title"><a th:text="${category.name}" href="#">Workstation</a></h4>
                             </div>
                         </div>
-                        <!--                        <div class="panel panel-default">-->
-                        <!--                            <div class="panel-heading">-->
-                        <!--                                <h4 class="panel-title"><a href="#">Office</a></h4>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="panel panel-default">-->
-                        <!--                            <div class="panel-heading">-->
-                        <!--                                <h4 class="panel-title"><a href="#">Graphics</a></h4>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="panel panel-default">-->
-                        <!--                            <div class="panel-heading">-->
-                        <!--                                <h4 class="panel-title"><a href="#">Gaming</a></h4>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="panel panel-default">-->
-                        <!--                            <div class="panel-heading">-->
-                        <!--                                <h4 class="panel-title"><a href="#">Workstation</a></h4>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div><!--/category-products-->
 
                     <div class="brands_products"><!--brands_products-->
@@ -230,22 +210,9 @@
                             <ul class="nav nav-pills nav-stacked">
                                 <li th:each="supply:${supplies}"><a href="#"><span
                                         th:text="${supply.name}">Dell</span></a></li>
-                                <!--                                <li><a href="#"> <span class="pull-right">(56)</span>Asus</a></li>-->
-                                <!--                                <li><a href="#"> <span class="pull-right">(27)</span>HP</a></li>-->
-                                <!--                                <li><a href="#"> <span class="pull-right">(32)</span>Acer</a></li>-->
-                                <!--                                <li><a href="#"> <span class="pull-right">(5)</span>Mac</a></li>-->
                             </ul>
                         </div>
                     </div><!--/brands_products-->
-
-                    <!--                    <div class="price-range">&lt;!&ndash;price-range&ndash;&gt;-->
-                    <!--                        <h2>Giá</h2>-->
-                    <!--                        <div class="well text-center">-->
-                    <!--                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600"-->
-                    <!--                                   data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br/>-->
-                    <!--                            <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>-->
-                    <!--                        </div>-->
-                    <!--                    </div>&lt;!&ndash;/price-range&ndash;&gt;-->
 
                     <div class="shipping text-center"><!--shipping-->
                         <img src="libs/users/images/home/shipping.jpg" alt=""/>
@@ -261,132 +228,18 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img th:src="@{${product.imageLink}}" src="/libs/users/images/home/product1.jpg"
+                                    <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
+                                         src="/libs/users/images/home/product1.jpg"
                                          alt=""/>
                                     <h2>$<span th:text="${product.price}">Cost</span></h2>
                                     <p th:text="${product.name}">Name product</p>
-                                    <a href="javascript:void(0)" class="btn btn-default add-to-cart"
-                                       th:onclick="'Cart('+${product.id}+')'"><i class="fa fa-shopping-cart"
-                                                                                 th:onclick="'Cart('+${product.id}+')'"></i>Add
-                                        to cart</a>
+                                    <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'" class="btn btn-default add-to-cart">
+                                        <i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-sm-4">-->
-                    <!--                        <div class="product-image-wrapper">-->
-                    <!--                            <div class="single-products">-->
-                    <!--                                <div class="productinfo text-center">-->
-                    <!--                                    <img src="/libs/users/images/home/product1.jpg" alt=""/>-->
-                    <!--                                    <h2>$<span>Cost</span></h2>-->
-                    <!--                                    <p>Name product</p>-->
-                    <!--                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add-->
-                    <!--                                        to cart</a>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-
                 </div><!--features_items-->
 
                 <div class="category-tab"><!--category-tab-->
@@ -405,61 +258,57 @@
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
                                         <div class="productinfo text-center">
-                                            <img th:src="@{${product.imageLink}}"
+                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
                                                  src="/libs/users/images/home/gallery1.jpg" alt=""/>
                                             <h2>$<span th:text="${product.price}">Cost</span></h2>
                                             <p th:text="${product.name}">Name products</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
+                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                               class="btn btn-default add-to-cart">
+                                                <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="office">
+                            <div class="col-sm-3" th:each="product:${products}">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
+                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
+                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
+                                            <p th:text="${product.name}">Name products</p>
+                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                               class="btn btn-default add-to-cart"><i
                                                     class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="/libs/users/images/home/gallery2.jpg" alt=""/>-->
-                            <!--                                            <h2>$<span>Cost</span></h2>-->
-                            <!--                                            <p>Name Product</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
-
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="/libs/users/images/home/gallery3.jpg" alt=""/>-->
-                            <!--                                            <h2>$<span>Cost</span></h2>-->
-                            <!--                                            <p>Name Product</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
-
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="/libs/users/images/home/gallery4.jpg" alt=""/>-->
-                            <!--                                            <h2>$<span>Cost</span></h2>-->
-                            <!--                                            <p>Name Product</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
-
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                         </div>
 
-                        <div class="tab-pane fade" id="office">
+                        <div class="tab-pane fade" id="business">
+                            <div class="col-sm-3" th:each="product:${products}">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
+                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
+                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
+                                            <p th:text="${product.name}">Name products</p>
+                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                               class="btn btn-default add-to-cart"><i
+                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="graphics">
                             <div class="col-sm-3" th:each="product:${products}">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
@@ -468,363 +317,53 @@
                                                  src="/libs/users/images/home/gallery1.jpg" alt=""/>
                                             <h2>$<span th:text="${product.price}">Cost</span></h2>
                                             <p th:text="${product.name}">Name products</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i
+                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                               class="btn btn-default add-to-cart"><i
                                                     class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="images/home/gallery3.jpg" alt=""/>-->
-                            <!--                                            <h2>$56</h2>-->
-                            <!--                                            <p>Easy Polo Black Edition</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
 
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="images/home/gallery2.jpg" alt=""/>-->
-                            <!--                                            <h2>$56</h2>-->
-                            <!--                                            <p>Easy Polo Black Edition</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
+                        </div>
 
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                            <div class="col-sm-3">-->
-                            <!--                                <div class="product-image-wrapper">-->
-                            <!--                                    <div class="single-products">-->
-                            <!--                                        <div class="productinfo text-center">-->
-                            <!--                                            <img src="images/home/gallery1.jpg" alt=""/>-->
-                            <!--                                            <h2>$56</h2>-->
-                            <!--                                            <p>Easy Polo Black Edition</p>-->
-                            <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                            <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                            <!--                                        </div>-->
-
-                            <!--                                    </div>-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <!--                        </div>-->
-
-                            <div class="tab-pane fade" id="business">
-                                <div class="col-sm-3" th:each="product:${products}">
-                                    <div class="product-image-wrapper">
-                                        <div class="single-products">
-                                            <div class="productinfo text-center">
-                                                <img th:src="@{${product.imageLink}}"
-                                                     src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                                <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                                <p th:text="${product.name}">Name products</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i
-                                                        class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
+                        <div class="tab-pane fade" id="workstation">
+                            <div class="col-sm-3" th:each="product:${products}">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <img th:src="@{${product.imageLink}}"
+                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
+                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
+                                            <p th:text="${product.name}">Name products</p>
+                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                               class="btn btn-default add-to-cart"><i
+                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>
-                                </div>
-                                <!--                            <div class="col-sm-3">-->
-                                <!--                                <div class="product-image-wrapper">-->
-                                <!--                                    <div class="single-products">-->
-                                <!--                                        <div class="productinfo text-center">-->
-                                <!--                                            <img src="images/home/gallery4.jpg" alt=""/>-->
-                                <!--                                            <h2>$56</h2>-->
-                                <!--                                            <p>Easy Polo Black Edition</p>-->
-                                <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                <!--                                        </div>-->
-
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <!--                            </div>-->
-                                <!--                            <div class="col-sm-3">-->
-                                <!--                                <div class="product-image-wrapper">-->
-                                <!--                                    <div class="single-products">-->
-                                <!--                                        <div class="productinfo text-center">-->
-                                <!--                                            <img src="images/home/gallery1.jpg" alt=""/>-->
-                                <!--                                            <h2>$56</h2>-->
-                                <!--                                            <p>Easy Polo Black Edition</p>-->
-                                <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                <!--                                        </div>-->
-
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <!--                            </div>-->
-                                <!--                            <div class="col-sm-3">-->
-                                <!--                                <div class="product-image-wrapper">-->
-                                <!--                                    <div class="single-products">-->
-                                <!--                                        <div class="productinfo text-center">-->
-                                <!--                                            <img src="images/home/gallery2.jpg" alt=""/>-->
-                                <!--                                            <h2>$56</h2>-->
-                                <!--                                            <p>Easy Polo Black Edition</p>-->
-                                <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                <!--                                        </div>-->
-
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <!--                            </div>-->
-                                <!--                        </div>-->
-
-                                <div class="tab-pane fade" id="graphics">
-                                    <div class="col-sm-3" th:each="product:${products}">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img th:src="@{${product.imageLink}}"
-                                                         src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                                    <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                                    <p th:text="${product.name}">Name products</p>
-                                                    <a href="#" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery2.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery3.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery4.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
-                                </div>
-
-                                <div class="tab-pane fade" id="workstation">
-                                    <div class="col-sm-3" th:each="product:${products}">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img th:src="@{${product.imageLink}}"
-                                                         src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                                    <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                                    <p th:text="${product.name}">Name products</p>
-                                                    <a href="#" class="btn btn-default add-to-cart"><i
-                                                            class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery4.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery3.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
-                                    <!--                            <div class="col-sm-3">-->
-                                    <!--                                <div class="product-image-wrapper">-->
-                                    <!--                                    <div class="single-products">-->
-                                    <!--                                        <div class="productinfo text-center">-->
-                                    <!--                                            <img src="images/home/gallery1.jpg" alt=""/>-->
-                                    <!--                                            <h2>$56</h2>-->
-                                    <!--                                            <p>Easy Polo Black Edition</p>-->
-                                    <!--                                            <a href="#" class="btn btn-default add-to-cart"><i-->
-                                    <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
-                                    <!--                                </div>-->
-                                    <!--                            </div>-->
                                 </div>
                             </div>
-                        </div><!--/category-tab-->
-
-                        <div class="recommended_items"><!--recommended_items-->
-                            <h2 class="title text-center">Sản phẩm mới</h2>
-
-                            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="/libs/users/images/home/recommend1.jpg" alt=""/>
-                                                        <h2>$<span>500</span></h2>
-                                                        <p>Asus K55A</p>
-                                                        <a href="#" class="btn btn-default add-to-cart"><i
-                                                                class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="/libs/users/images/home/recommend1.jpg" alt=""/>
-                                                        <h2>$<span>600</span></h2>
-                                                        <p>Asus Rog 800</p>
-                                                        <a href="#" class="btn btn-default add-to-cart"><i
-                                                                class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img src="/libs/users/images/home/recommend1.jpg" alt=""/>
-                                                        <h2>$<span>900</span></h2>
-                                                        <p>Dell K6</p>
-                                                        <a href="#" class="btn btn-default add-to-cart"><i
-                                                                class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item" th:each="product:${products}">
-                                        <div class="col-sm-4">
-                                            <div class="product-image-wrapper">
-                                                <div class="single-products">
-                                                    <div class="productinfo text-center">
-                                                        <img th:src="@{${product.imageLink}}"
-                                                             src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                                        <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                                        <p th:text="${product.name}">Name products</p>
-                                                        <a href="javascript:void(0)" class="btn btn-default add-to-cart"
-                                                           th:onclick="'Cart('+${product.id}+')'"><i
-                                                                class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--                                        <div class="col-sm-4">-->
-                                        <!--                                            <div class="product-image-wrapper">-->
-                                        <!--                                                <div class="single-products">-->
-                                        <!--                                                    <div class="productinfo text-center">-->
-                                        <!--                                                        <img src="/libs/users/images/home/recommend1.jpg" alt=""/>-->
-                                        <!--                                                        <h2>$<span>Cost</span></h2>-->
-                                        <!--                                                        <p>Name Product</p>-->
-                                        <!--                                                        <a href="#" class="btn btn-default add-to-cart"><i-->
-                                        <!--                                                                class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                        <!--                                                    </div>-->
-
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="col-sm-4">-->
-                                        <!--                                            <div class="product-image-wrapper">-->
-                                        <!--                                                <div class="single-products">-->
-                                        <!--                                                    <div class="productinfo text-center">-->
-                                        <!--                                                        <img src="/libs/users/images/home/recommend1.jpg" alt=""/>-->
-                                        <!--                                                        <h2>$<span>Cost</span></h2>-->
-                                        <!--                                                        <p>Name Product</p>-->
-                                        <!--                                                        <a href="#" class="btn btn-default add-to-cart"><i-->
-                                        <!--                                                                class="fa fa-shopping-cart"></i>Add to cart</a>-->
-                                        <!--                                                    </div>-->
-
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-
-                                    </div>
-                                    <a class="left recommended-item-control" href="#recommended-item-carousel"
-                                       data-slide="prev">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                    <a class="right recommended-item-control" href="#recommended-item-carousel"
-                                       data-slide="next">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!--/recommended_items-->
-
+                        </div>
                     </div>
-                </div>
+                </div><!--/category-tab-->
             </div>
-            <div class="modal fade" id="addCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header text-primary">
-                            <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Thêm thành công vào giỏ hàng!!</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Thêm thành công vào giỏ hàng!!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

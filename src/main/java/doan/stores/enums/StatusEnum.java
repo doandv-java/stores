@@ -7,7 +7,7 @@ import java.util.EnumSet;
 @Getter
 public enum StatusEnum {
     CART(0, "CART"),
-    PAYED(1, "PAYED"),
+    ORDER(1, "ORDER"),
     SUCCESS(2, "SUCCESS"),
     PEND(3, "PEND");
 

@@ -26,7 +26,7 @@ $(document).ready(function () {
             cache: false,
             success: function (data) {
                 console.log(data);
-                if (data.result) {
+                if (data.status===200) {
                     //remove value
                     $('#name').val('');
                     $('#userName').val('');
@@ -35,10 +35,9 @@ $(document).ready(function () {
                     $('#alertSuccess').removeClass('hide');
                 } else {
                     //show error
-                    let validator = data.errorValidators;
-                    let service = data.errorServices;
-                    viewError(validator);
-                    viewError(service);
+                    console.log(data.errors);
+                    let errors = data.errors;
+                    viewError(errors);
                 }
             }
         });

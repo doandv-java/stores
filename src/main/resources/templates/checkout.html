@@ -121,6 +121,48 @@
 
 <section id="cart_items">
     <div class="container">
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="shopper-info">
+                        <p>Thông tin khách hàng</p>
+                        <form>
+                            <input type="text" placeholder="Tên" th:value="${user.name}" disabled="true">
+                            <input type="text" placeholder="Email" th:value="${user.userName}" disabled="true">
+                            <input type="text" placeholder="Địa chỉ" th:value="${user.address}" disabled="true">
+                            <input type="text" placeholder="Số điện thoại" th:value="${user.phone}" disabled="true">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="shopper-info">
+                        <p>Thông tin shop</p>
+                        <form>
+                            <input type="text" placeholder="Tên" disabled="true">
+                            <input type="text" placeholder="Email" disabled="true">
+                            <input type="password" placeholder="Địa chỉ" disabled="true">
+                            <input type="password" placeholder="Số điện thoại" disabled="true">
+                            <input type="text" placeholder="Ngân hàng" disabled="true">
+                            <input type="text" placeholder="Số tài khoản" disabled="true">
+                            <div>
+                                    <span>
+						<label><input type="checkbox" name="payment">Trả tiền khi nhận hàng</label>
+					</span>
+                                <span>
+						<label><input type="checkbox" name="payment"> Chuyển tiền qua tài khoản</label>
+					</span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>Thông tin đơn hàng</h2>
+        </div>
+
         <div class="table-responsive cart_info">
             <table class="table table-condensed">
                 <thead>
@@ -129,52 +171,70 @@
                     <td class="description"></td>
                     <td class="price">Giá</td>
                     <td class="quantity">Số lượng</td>
-                    <td></td>
                 </tr>
                 </thead>
                 <tbody th:if="${!orderDetails.isEmpty()}">
                 <tr th:each="item:${orderDetails}">
                     <td class="cart_product">
-                        <a href=""><img style="width: 100px;height: 100px;" th:src="@{${item.product.imageLink}}"
-                                        src=" images/cart/one.png" alt=""></a>
+                        <a href=""><img style="height: 100px;width: 100px;" th:src="@{${item.product.imageLink}}"
+                                        alt=""></a>
                     </td>
                     <td class="cart_description">
-                        <h4><a href="#" th:text="${item.product.name}">Colorblock Scuba</a></h4>
+                        <h4 th:text="${item.product.name}">Colorblock Scuba</h4>
                     </td>
                     <td class="cart_price">
-                        <p>$<span th:text="${item.product.price}">59</span></p>
+                        <p><span th:text="${item.product.price}">59</span>$</p>
                     </td>
                     <td class="cart_quantity">
                         <div class="cart_quantity_button">
-                            <a class="cart_quantity_up" href="javascript:void(0)"
-                               th:onclick="'changeQuantity('+${item.id}+','+1+')'"> + </a>
-                            <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off"
-                                   size="2" th:id="${item.id}+'_quantity'"
-                                   th:onchange="'changeQuantity('+${item.id}+','+0+')'" th:value="${item.quantity}">
-                            <a class="cart_quantity_down" href="javascript:void(0)"
-                               th:onclick="'changeQuantity('+${item.id}+','+2+')'"> - </a>
+                            <p><span th:text="${item.quantity}">59</span></p>
                         </div>
-                    </td>
-                    <td class="cart_delete">
-                        <a class="cart_quantity_delete" th:href="@{'/cart/'+${item.getId()}+'/delete'}"><i
-                                class="fa fa-times"></i></a>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5">
-                        <input type="button" th:onclick="orderCart()" class="pull-right add-to-cart"
-                               value="Đặt hàng"></input>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="2">
+                        <table class="table table-condensed total-result">
+                            <tr>
+                                <td>Total</td>
+                                <td><span th:text="${order.getTotal()}">$61</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp;</td>
+                    <td colspan="2">
+                        <input value="Thanh toán" onclick="pay()" type="button">
                     </td>
                 </tr>
                 </tbody>
-                <tbody style="min-height: 40%;" th:if="${orderDetails.isEmpty()}">
-
-                </tbody>
-
             </table>
         </div>
+
     </div>
-</section>
+    <div class="modal fade" id="PayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="dialog_text">Thanh toán thành công!!!!</p>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" th:href="@{/home}" class="btn btn-secondary" data-dismiss="modal">Trang chủ</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> <!--/#cart_items-->
+
 <!--/#cart_items-->
 <footer id="footer"><!--Footer-->
     <div class="footer-bottom">
@@ -197,6 +257,6 @@
 <script th:src="@{/libs/users/js/main.js}"></script>
 <script th:src="@{/js/home.js}">
 </script>
-<script th:src="@{/js/cart.js}"></script>
+<script th:src="@{/js/checkout.js}"></script>
 </body>
 </html>

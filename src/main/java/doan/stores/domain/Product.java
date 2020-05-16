@@ -6,11 +6,10 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "products")
 @Data
-public class Product extends BaseEntity {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

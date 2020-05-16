@@ -9,6 +9,8 @@ public interface SupplyService {
 
     List<Supply> findSuppliesByDeleted(int deleted);
 
+    List<Supply> findSuppliesByDeletedAndActive(int deleted, int active);
+
     void saveSupply(SupplyRequest request);
 
     void deleteSupply(Long id);

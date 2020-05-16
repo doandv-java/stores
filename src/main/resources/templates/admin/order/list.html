@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doan Stores</title>
+    <!-- Font Awesome -->
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">-->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/modules/animations-extended.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/addons/datatables.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="container-for-admin">
+    <!--Main Navigation-->
+    <th:block th:replace="admin/fragments/header::header(${user})"/>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main class="pt-5 mx-lg-5">
+        <div class="container-fluid mt-5">
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Danh sách sản phẩm</h4>
+                            <div class="table-striped table-fixed">
+                                <table class="table text-center" id="productTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Số hóa đơn</th>
+                                        <th>Người đặt hàng</th>
+                                        <th>Email</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Ngày đặt đơn</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Hoạt động</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order :${orders}" th:id="${order.id}">
+                                        <td th:text="${order.id}"></td>
+                                        <td th:text="${order.getUser().getName()}"></td>
+                                        <td th:text="${order.getUser().getUserName()}"></td>
+                                        <td th:text="${order.getUser().getPhone()}"></td>
+                                        <td th:text="${#dates.format(order.getCreateDay(),'dd/MM/yyyy hh:MM')}"></td>
+                                        <td th:text="${order.total}"></td>
+                                        <td>
+                                            <select th:onchange="'changeStatus('+${order.id}+')'"
+                                                    th:id="${order.id}+'_status'">
+                                                <option th:each="status:${statuses}" th:value="${status.getCode()}"
+                                                        th:text="${status.getText()}"
+                                                        th:selected="${status.getCode()==order.getStatus()}"></option>
+                                            </select>
+                                        </td>
+                                        <!--                                        <td th:text="${T(doan.stores.enums.StatusEnum).ofCode(order.getStatus()).getText()}">-->
+
+                                        <!--                                        </td>-->
+                                        <td class="text-primary">
+                                            <a th:href="@{'/admin/order/'+${order.id}}">Chi tiết</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Grid row-->
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--    Modal edit create delete-->
+    <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Cập nhật thành công</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <th:block th:replace="admin/fragments/footer::footer"/>
+    <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
+    <!--/.Footer-->
+    <script th:src="@{/js/admin_order.js}"></script>
+</div>
+</body>
+</html>

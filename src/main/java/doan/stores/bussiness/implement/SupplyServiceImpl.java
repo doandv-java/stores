@@ -23,6 +23,11 @@ public class SupplyServiceImpl implements SupplyService {
     }
 
     @Override
+    public List<Supply> findSuppliesByDeletedAndActive(int deleted, int active) {
+        return supplyRepository.findSuppliesByDeletedIsAndActiveIs(deleted,active);
+    }
+
+    @Override
     public void saveSupply(SupplyRequest request) {
         Supply supply = new Supply();
         supply.setId(request.getId());

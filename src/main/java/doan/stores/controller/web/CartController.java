@@ -1,14 +1,11 @@
 package doan.stores.controller.web;
 
-import doan.stores.bussiness.OrderService;
+import doan.stores.bussiness.CartService;
 import doan.stores.bussiness.implement.CommonService;
 import doan.stores.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +19,7 @@ public class CartController {
     private CommonService commonService;
 
     @Autowired
-    private OrderService orderService;
+    private CartService cartService;
 
     @PostMapping("/{id}")
     @ResponseBody
@@ -33,7 +30,20 @@ public class CartController {
             map.put("status", 101);
         } else {
             map.put("status", 200);
-            orderService.addCart(productId);
+            cartService.addCart(productId);
+        }
+        return map;
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public Map<String, Object> changeQuantityCart(@PathVariable("id") Long itemId,
+                                                  @RequestParam("quantity") int quantity) {
+        Map<String, Object> map = new HashMap<>();
+        if (cartService.updateQuantity(itemId, quantity)) {
+            map.put("status", 200);
+        } else {
+            map.put("status", 101);
         }
         return map;
     }

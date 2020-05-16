@@ -66,4 +66,10 @@ public class WarehouseServiceImpl implements WarehouseService {
         List<Warehouse> warehouses = warehouseRepository.top3Warehouse();
         return warehouses;
     }
+
+    @Override
+    public Warehouse findWarehouse(Long productID) {
+        Warehouse warehouse = warehouseRepository.findWarehouseByProductIdIs(productID);
+        return warehouse;
+    }
 }

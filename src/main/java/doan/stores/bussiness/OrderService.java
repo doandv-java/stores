@@ -6,16 +6,11 @@ import doan.stores.domain.OrderDetail;
 import java.util.List;
 
 public interface OrderService {
-    void addCart(Long productId);
+    List<Order> findListOrder();
 
-    Order viewCart();
+    boolean updateStatus(Long orderId, int status);
 
-    List<OrderDetail> viewDetailCart();
+    Order findOrderById(Long orderId);
 
-
-    void deleteItemCart(Long orderDetailId);
-
-    void changeQuantityCart(Long orderDetailId, boolean add);
-
-    void payCart();
+    List<OrderDetail> getItemInOrderByOrderId(Long orderId);
 }

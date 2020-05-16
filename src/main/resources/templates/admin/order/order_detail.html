@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doan Stores</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.12.0/css/all.css}">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/mdb.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="container-for-admin">
+    <!--Main Navigation-->
+    <th:block th:replace="admin/fragments/header::header(${user})"/>
+    <!--Main Navigation-->
+    <!--Main layout-->
+    <main class="pt-5 mx-lg-5">
+        <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-striped table-fixed">
+                                <table class="table text-center">
+                                    <h4>Thông tin khách hàng</h4>
+                                    <tr>
+                                        <td>Tên:</td>
+                                        <td th:text="${order.user.name}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td th:text="${order.user.userName}">abc@gmail.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số điện thoại:</td>
+                                        <td th:text="${order.user.phone}">012345698</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ:</td>
+                                        <td th:text="${order.user.address}">Abcdhjf</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="table-striped table-fixed">
+                                <table class="table text-center">
+                                    <h4>Thông tin đơn hàng</h4>
+                                    <thead>
+                                    <th>Ảnh SP</th>
+                                    <th>Tên SP</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="item:${items}">
+                                        <td><img style="width: 50px;height: 50px;"
+                                                 th:src="@{${item.product.imageLink}}"></td>
+                                        <td th:text="${item.product.name}">ÁNC</td>
+                                        <td th:text="${item.product.price}">Giá</td>
+                                        <td th:text="${item.quantity}">10</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="4"><a th:href="@{/admin/order}"
+                                                           class="pull-right btn-primary">OK</a></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <th:block th:replace="admin/fragments/footer::footer"/>
+    <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
+
+    <script th:src="@{/js/admin_employee.js}"></script>
+    <!--/.Footer-->
+</div>
+</body>
+</html>

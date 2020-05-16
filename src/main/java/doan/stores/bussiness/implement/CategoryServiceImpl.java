@@ -2,10 +2,12 @@ package doan.stores.bussiness.implement;
 
 import doan.stores.bussiness.CategoryService;
 import doan.stores.domain.Category;
+import doan.stores.domain.Product;
 import doan.stores.dto.request.CategoryRequest;
 import doan.stores.persistenct.CategoryRepository;
 import doan.stores.persistenct.ProductRepository;
 import doan.stores.utils.Constants;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Log4j2
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -23,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findCategoriesByActive(int active) {
+        log.info("active:{}", active);
         return categoryRepository.findCategoriesByActiveIs(active);
     }
 
@@ -30,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void saveCategory(CategoryRequest request) {
         Category category;
-        if (request.getId()==null) {
+        if (request.getId() == null) {
             category = new Category();
         } else {
             category = categoryRepository.getOne(request.getId());
@@ -60,6 +64,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long id) {
         Category category = categoryRepository.getOne(id);
+        List<Product> products = productRepository.findProductsByCategoryId(category.getId());
+        if (!products.isEmpty()) {
+            products.forEach(product -> product.setDeleted(Constants.DELETE.TRUE));
+        }
+        productRepository.saveAll(products);
         category.setActive(Constants.DELETE.TRUE);
         categoryRepository.save(category);
     }

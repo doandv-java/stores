@@ -4,6 +4,7 @@ import doan.stores.bussiness.BaseService;
 import doan.stores.bussiness.UserService;
 import doan.stores.domain.User;
 import doan.stores.dto.request.ChangePasswordRequest;
+import doan.stores.dto.request.RegisterRequest;
 import doan.stores.dto.response.ErrorResponse;
 import doan.stores.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +71,39 @@ public class LoginController {
             map.put("errors", errors);
         }
         return map;
+    }
+
+    @GetMapping("/register")
+    public ModelAndView viewRegister() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("register");
+        return mav;
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public Map<String, Object> sendRegister(@Valid @RequestBody RegisterRequest request, BindingResult result) {
+        Map<String, Object> map = new HashMap<>();
+        List<ErrorResponse> errors = baseService.bindingResult(result);
+        if (errors.isEmpty()) {
+            if (userService.register(request.toDxo())) {
+                map.put("status", 200);
+            } else {
+                map.put("status", 100);
+                map.put("errors", Arrays.asList(new ErrorResponse("userName", "Tai khoan da ton tai")));
+            }
+        } else {
+            map.put("status", 100);
+            map.put("errors", errors);
+        }
+        return map;
+    }
+
+    @GetMapping("/404")
+    public ModelAndView view404Page() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("404");
+        return mav;
     }
 
 }

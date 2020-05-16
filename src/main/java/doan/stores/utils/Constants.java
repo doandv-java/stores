@@ -12,8 +12,13 @@ public class Constants {
         int FALSE = 0;
     }
 
+    public interface ACTIVE {
+        int TRUE = 1;
+        int FALSE = 0;
+    }
+
     public interface DATE_FORMAT {
         String YYYY_MM_DD = "yyyy-MM-dd";
     }
-    
+
 }

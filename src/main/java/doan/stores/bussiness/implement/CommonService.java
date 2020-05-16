@@ -20,8 +20,15 @@ public class CommonService implements BaseService {
 
     @Override
     public User getPrincipal() {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserByUserNameIs(principal.getUsername());
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (o.equals("anonymousUser")) {
+            return null;
+        } else {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userRepository.findUserByUserNameIs(userDetails.getUsername());
+            return user;
+        }
+
     }
 
     @Override

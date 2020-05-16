@@ -8,6 +8,7 @@ import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.dto.response.ErrorResponse;
 import doan.stores.enums.RoleEnum;
+import doan.stores.enums.StatusEnum;
 import doan.stores.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,6 +51,9 @@ public class AdminController {
     @Autowired
     private WarehouseService warehouseService;
 
+    @Autowired
+    private OrderService orderService;
+
     @GetMapping("/home")
     public ModelAndView viewHome() {
         ModelAndView mav = new ModelAndView();
@@ -57,7 +61,7 @@ public class AdminController {
         User user = userService.findUserByUserName(principal.getUsername());
         List<Warehouse> warehouses = warehouseService.top5Warehouse();
         mav.addObject("user", user);
-        mav.addObject("warehouses",warehouses);
+        mav.addObject("warehouses", warehouses);
         mav.setViewName("admin/home");
         return mav;
     }
@@ -145,7 +149,7 @@ public class AdminController {
         User user = commonService.getPrincipal();
         ProductRequest product = productService.getProductById(id);
         List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
-        List<Category> categories = categoryService.findCategoriesByActive(1);
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
         mav.addObject("supplies", supplies);
         mav.addObject("categories", categories);
         mav.addObject("user", user);
@@ -161,7 +165,7 @@ public class AdminController {
         User user = commonService.getPrincipal();
         ProductRequest product = new ProductRequest();
         List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
-        List<Category> categories = categoryService.findCategoriesByActive(1);
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
         mav.addObject("supplies", supplies);
         mav.addObject("categories", categories);
         mav.addObject("user", user);
@@ -196,7 +200,7 @@ public class AdminController {
     public ModelAndView viewCategory() {
         ModelAndView mav = new ModelAndView();
         User user = commonService.getPrincipal();
-        List<Category> categories = categoryService.findCategoriesByActive(1);
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
         mav.addObject("user", user);
         mav.addObject("categories", categories);
         mav.setViewName("admin/category/list");
@@ -206,8 +210,39 @@ public class AdminController {
     @GetMapping("/order")
     public ModelAndView viewOrder() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("admin/orders/list");
+        User user = commonService.getPrincipal();
+        List<Order> orders = orderService.findListOrder();
+        StatusEnum[] statuses = StatusEnum.values();
+        mav.addObject("user", user);
+        mav.addObject("orders", orders);
+        mav.addObject("statuses", statuses);
+        mav.setViewName("admin/order/list");
         return mav;
+    }
+
+    @GetMapping("/order/{id}")
+    public ModelAndView viewOrderDetail(@PathVariable("id") Long id) {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        Order order = orderService.findOrderById(id);
+        List<OrderDetail> orderDetails = orderService.getItemInOrderByOrderId(id);
+        mav.addObject("user", user);
+        mav.addObject("order", order);
+        mav.addObject("items", orderDetails);
+        mav.setViewName("admin/order/order_detail");
+        return mav;
+    }
+
+    @PutMapping("/order/{id}")
+    @ResponseBody
+    public Map<String, Object> updateStatusOrder(@PathVariable("id") Long orderId, @RequestParam("status") int status) {
+        Map<String, Object> map = new HashMap<>();
+        if (orderService.updateStatus(orderId, status)) {
+            map.put("status", 200);
+        } else {
+            map.put("status", 101);
+        }
+        return map;
     }
 
     @GetMapping("/advertise")

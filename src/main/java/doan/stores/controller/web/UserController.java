@@ -38,14 +38,14 @@ public class UserController {
     private AdvertiseService advertiseService;
 
     @Autowired
-    private OrderService orderService;
+    private CartService cartService;
 
     @GetMapping("/home")
     public ModelAndView viewHome() {
         ModelAndView mav = new ModelAndView();
         User user = commonService.getPrincipal();
-        List<Category> categories = categoryService.findCategoriesByActive(1);
-        List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
+        List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.findProductsByDeleted(Constants.DELETE.FALSE);
         mav.addObject("user", user);
@@ -53,8 +53,14 @@ public class UserController {
         mav.addObject("supplies", supplies);
         mav.addObject("advertises", advertises);
         mav.addObject("products", products);
-
         mav.setViewName("home");
+        return mav;
+    }
+
+    @GetMapping("/profile")
+    public ModelAndView viewProfile() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("profile");
         return mav;
     }
 
@@ -65,10 +71,10 @@ public class UserController {
         if (user == null) {
             mav.setViewName("redirect:/login");
         } else {
-            List<Category> categories = categoryService.findCategoriesByActive(1);
+            List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
             List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
-            Order order = orderService.viewCart();
-            List<OrderDetail> orderDetails = orderService.viewDetailCart();
+            Order order = cartService.viewCart();
+            List<OrderDetail> orderDetails = cartService.viewDetailCart();
             mav.addObject("user", user);
             mav.addObject("categories", categories);
             mav.addObject("supplies", supplies);
@@ -82,7 +88,7 @@ public class UserController {
     @GetMapping("/cart/{id}/delete")
     public ModelAndView deleteItemCart(@PathVariable("id") Long orderDetailId) {
         ModelAndView mav = new ModelAndView();
-        orderService.deleteItemCart(orderDetailId);
+        cartService.deleteItemCart(orderDetailId);
         mav.setViewName("redirect:/cart");
         return mav;
     }
@@ -90,7 +96,7 @@ public class UserController {
     @GetMapping("/cart/{id}/down")
     public ModelAndView downItemCart(@PathVariable("id") Long orderDetailId) {
         ModelAndView mav = new ModelAndView();
-        orderService.changeQuantityCart(orderDetailId, false);
+        cartService.changeQuantityCart(orderDetailId, false);
         mav.setViewName("redirect:/cart");
         return mav;
     }
@@ -98,18 +104,40 @@ public class UserController {
     @GetMapping("/cart/{id}/up")
     public ModelAndView upItemCart(@PathVariable("id") Long orderDetailId) {
         ModelAndView mav = new ModelAndView();
-        orderService.changeQuantityCart(orderDetailId, true);
+        cartService.changeQuantityCart(orderDetailId, true);
         mav.setViewName("redirect:/cart");
         return mav;
     }
+
 
     @PostMapping("/cart/pay")
     @ResponseBody
     public Map<String, Object> payCart() {
         Map<String, Object> map = new HashMap<>();
-        orderService.payCart();
-        map.put("status",200);
+        cartService.payCart();
+        map.put("status", 200);
         return map;
+    }
+
+    @GetMapping("/checkout")
+    public ModelAndView checkOut() {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        if (user == null) {
+            mav.setViewName("redirect:/login");
+        } else {
+            List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
+            List<Supply> supplies = supplyService.findSuppliesByDeleted(Constants.DELETE.FALSE);
+            Order order = cartService.viewCart();
+            List<OrderDetail> orderDetails = cartService.viewDetailCart();
+            mav.addObject("user", user);
+            mav.addObject("categories", categories);
+            mav.addObject("supplies", supplies);
+            mav.addObject("order", order);
+            mav.addObject("orderDetails", orderDetails);
+            mav.setViewName("checkout");
+        }
+        return mav;
     }
 
     @GetMapping("/order/history")

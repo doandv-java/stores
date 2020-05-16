@@ -1,16 +1,15 @@
 package doan.stores.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@EqualsAndHashCode(callSuper = true)
+
 @Entity
 @Table(name = "warehouse")
 @Data
-public class Warehouse extends BaseEntity {
+public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

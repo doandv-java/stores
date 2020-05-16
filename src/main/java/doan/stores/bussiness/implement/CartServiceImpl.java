@@ -1,10 +1,9 @@
-package doan.stores.bussiness;
+package doan.stores.bussiness.implement;
 
-import doan.stores.bussiness.implement.CommonService;
-import doan.stores.domain.Order;
-import doan.stores.domain.OrderDetail;
-import doan.stores.domain.Product;
-import doan.stores.domain.User;
+import doan.stores.bussiness.CartService;
+import doan.stores.bussiness.ProductService;
+import doan.stores.bussiness.WarehouseService;
+import doan.stores.domain.*;
 import doan.stores.enums.StatusEnum;
 import doan.stores.persistenct.OrderDetailRepositosy;
 import doan.stores.persistenct.OrderRepository;
@@ -16,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class CartServiceImpl implements OrderService {
+public class CartServiceImpl implements CartService {
 
     @Autowired
     private CommonService commonService;
@@ -29,6 +28,8 @@ public class CartServiceImpl implements OrderService {
 
     @Autowired
     private OrderDetailRepositosy orderDetailRepositosy;
+    @Autowired
+    private WarehouseService warehouseService;
 
     @Override
     public void addCart(Long productId) {
@@ -49,6 +50,7 @@ public class CartServiceImpl implements OrderService {
             Product product = productService.findProductById(productId);
             orderDetail.setProduct(product);
             orderDetail.setQuantity(1);
+            order.setTotal((long) (product.getPrice() * 1));
             orderDetailRepositosy.save(orderDetail);
         } else {
             order.setLastUpdate(Dates.now());
@@ -66,6 +68,7 @@ public class CartServiceImpl implements OrderService {
             } else {
                 orderDetail.setQuantity(orderDetail.getQuantity() + 1);
             }
+            order.setTotal(order.getTotal() + (long) (product.getPrice() * 1));
             orderRepository.save(order);
             orderDetailRepositosy.save(orderDetail);
         }
@@ -112,10 +115,39 @@ public class CartServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean updateQuantity(Long itemId, int quantity) {
+        OrderDetail orderDetail = orderDetailRepositosy.getOne(itemId);
+        Warehouse warehouse = warehouseService.findWarehouse(orderDetail.getProductId());
+        long warehouseQuantity = warehouse.getQuantity();
+        if (warehouseQuantity >= quantity) {
+            orderDetail.setQuantity(quantity);
+            orderDetail = orderDetailRepositosy.save(orderDetail);
+            Order order = orderDetail.getOrder();
+            order.setTotal(getTotal(orderDetail.getOrderId()));
+            orderRepository.save(order);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public void payCart() {
         User user = commonService.getPrincipal();
         Order order = orderRepository.findOrderByStatusIsAndUserIdIs(StatusEnum.CART.getCode(), user.getId());
-        order.setStatus(StatusEnum.PAYED.getCode());
+        order.setStatus(StatusEnum.ORDER.getCode());
         orderRepository.save(order);
     }
+
+    private Long getTotal(Long orderId) {
+        List<OrderDetail> items = orderDetailRepositosy.getOrderDetailsByOrderIdIs(orderId);
+        long total;
+        if (!items.isEmpty()) {
+            total = items.stream().mapToLong(item -> (long) (item.getProduct().getPrice() * item.getQuantity())).sum();
+            return total;
+        } else {
+            return 0L;
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import doan.stores.bussiness.ImageService;
 import doan.stores.bussiness.UserService;
 import doan.stores.domain.User;
 import doan.stores.domain.UserPrincipal;
+import doan.stores.dto.dxo.RegisterDxo;
 import doan.stores.dto.request.UserRequest;
 import doan.stores.enums.RoleEnum;
 import doan.stores.persistenct.UserRepository;
@@ -152,4 +153,22 @@ public class UserServiceImpl implements UserService {
                 grantedAuthorities);
     }
 
+    @Override
+    public boolean register(RegisterDxo dxo) {
+        User user = userRepository.findUserByUserNameIsAndDeleted(dxo.getUsername(), Constants.DELETE.FALSE);
+        if (user != null) {
+            return false;
+        } else {
+            user = new User();
+            user.setUserName(dxo.getUsername());
+            user.setName(dxo.getName());
+            user.setPassword(passwordEncoder.encode(dxo.getPassword()));
+            user.setGender(dxo.getGender().getValue());
+            user.setRole(dxo.getRole().getText());
+            user.setImageLink(Constants.IMAGE_DEFAULT);
+            user.setDeleted(Constants.DELETE.FALSE);
+            userRepository.save(user);
+            return true;
+        }
+    }
 }

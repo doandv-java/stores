@@ -77,6 +77,11 @@
                         <p class="error" id="userName_errors"></p>
                         <input type="password" placeholder="Password" id="password"/>
                         <p class="error" id="password_errors"></p>
+                        <span>
+                                <a href="#" data-toggle="modal" id="forgotBtn" data-target="#forgotPasswordModal">Quên mật khẩu?</a>
+                                <a th:href="@{/login}" class="pull-right">Đăng nhập</a>
+                        </span>
+
                         <button type="button" class="btn btn-default" id="btnRegister">Đăng kí</button>
                     </form>
                 </div><!--/sign up form-->

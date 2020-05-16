@@ -5,9 +5,7 @@ import doan.stores.domain.Product;
 import doan.stores.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +28,20 @@ public class ProductController {
             map.put("products", products);
         } else {
             map.put("status", 101);
+        }
+        return map;
+    }
+
+    @DeleteMapping("/{id}")
+    private Map<String, Object> deleteProduct(@PathVariable("id") Long productId) {
+        Map<String, Object> map = new HashMap<>();
+        Product product = productService.findProductById(productId);
+        if (product == null) {
+            map.put("status", 101);
+            map.put("products", "Product không tồn tại");
+        } else {
+            map.put("status", 200);
+            productService.deleteProduct(productId);
         }
         return map;
     }
