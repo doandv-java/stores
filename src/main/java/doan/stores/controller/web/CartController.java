@@ -29,8 +29,29 @@ public class CartController {
         if (user == null) {
             map.put("status", 101);
         } else {
-            map.put("status", 200);
-            cartService.addCart(productId);
+            if (cartService.addCart(productId)) {
+                map.put("status", 200);
+            } else {
+                map.put("status", 500);
+            }
+        }
+        return map;
+    }
+
+    @PostMapping("/{id}/{quantity}")
+    @ResponseBody
+    public Map<String, Object> addCart(@PathVariable("id") Long productId, @PathVariable("quantity") int quantity) {
+        Map<String, Object> map = new HashMap<>();
+        User user = commonService.getPrincipal();
+        if (user == null) {
+            map.put("status", 101);
+        } else {
+
+            if (cartService.addCart(productId, quantity)) {
+                map.put("status", 200);
+            } else {
+                map.put("status", 500);
+            }
         }
         return map;
     }
@@ -40,10 +61,15 @@ public class CartController {
     public Map<String, Object> changeQuantityCart(@PathVariable("id") Long itemId,
                                                   @RequestParam("quantity") int quantity) {
         Map<String, Object> map = new HashMap<>();
-        if (cartService.updateQuantity(itemId, quantity)) {
-            map.put("status", 200);
-        } else {
+        User user = commonService.getPrincipal();
+        if (user == null) {
             map.put("status", 101);
+        } else {
+            if (cartService.updateQuantity(itemId, quantity)) {
+                map.put("status", 200);
+            } else {
+                map.put("status", 500);
+            }
         }
         return map;
     }

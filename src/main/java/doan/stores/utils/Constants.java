@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Constants {
-    public static final String IMAGE_DEFAULT = "no_image.png";
+    public static final String IMAGE_DEFAULT = "/upload/no_image.png";
     public static final String PASS_RANDOM = "123456";
 
     public interface DELETE {

@@ -65,7 +65,7 @@
                                 <li th:if="${user.role.equals('ADMIN')||user.role.equals('EMPLOYEE')}"><a
                                         th:href="@{/admin/home}"><i class="fa fa-home"></i> Trang quản trị</a></li>
                                 <li><a th:href="@{/profile}"><i class="fa fa-user"></i> Tài khoản</a></li>
-                                <li><a th:href="@{/history-order}"><i class="fa fa-star"></i> Đơn hàng</a></li>
+                                <li><a th:href="@{/order/history}"><i class="fa fa-star"></i> Đơn hàng</a></li>
                                 <li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                 <li><a th:href="@{/logout}"><i
                                         class="fa fa-lock"></i> Đăng xuất</a></li>
@@ -93,19 +93,22 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a th:href="@{/home}" class="active">Home</a></li>
+                            <li><a th:href="@{/shop}">Shop</a></li>
                             <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="category:${categories}"><a href="#" th:text="${category.getName()}">Gamming</a>
+                                    <li th:each="category:${categories}"><a
+                                            th:href="@{'/shop/category/'+${category.getId()}}"
+                                            th:text="${category.getName()}">Gamming</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="dropdown"><a href="#">Nhà cung cấp<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="supply:${supplies}"><a href="blog.html"
-                                                                        th:text="${supply.name}">Dell</a></li>
+                                    <li th:each="supply:${supplies}">
+                                        <a th:href="@{'/shop/supply/'+${supply.getId()}}"
+                                           th:text="${supply.name}">Dell</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Giới thiệu</a></li>
                         </ul>
                     </div>
                 </div>
@@ -163,7 +166,7 @@
                 <tr>
                     <td colspan="5">
                         <input type="button" th:onclick="orderCart()" class="pull-right add-to-cart"
-                               value="Đặt hàng"></input>
+                               value="Đặt hàng">
                     </td>
                 </tr>
                 </tbody>
@@ -194,9 +197,9 @@
 <script src="/libs/users/js/jquery.scrollUp.min.js"></script>
 <script src="/libs/users/js/price-range.js"></script>
 <script src="/libs/users/js/jquery.prettyPhoto.js"></script>
-<script th:src="@{/libs/users/js/main.js}"></script>
-<script th:src="@{/js/home.js}">
+<script src="/libs/users/js/main.js"></script>
+<script src="/js/home.js">
 </script>
-<script th:src="@{/js/cart.js}"></script>
+<script src="/js/cart.js"></script>
 </body>
 </html>

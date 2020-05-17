@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
     Warehouse findWarehouseByProductIdIs(Long productId);
-    @Query(value="select * from warehouse ORDER BY quantity ASC LIMIT 3",nativeQuery = true)
-    List<Warehouse> top3Warehouse();
+    @Query(value="select * from warehouse ORDER BY quantity ASC LIMIT 12",nativeQuery = true)
+    List<Warehouse> top12Warehouse();
 
 
 }

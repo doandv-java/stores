@@ -1,7 +1,6 @@
 package doan.stores.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,9 +15,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "code")
-    private String code;
 
     @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;

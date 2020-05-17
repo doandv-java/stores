@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    $('#orderTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+    });
+});
+
 function changeStatus(orderId) {
     let status = $('#' + orderId + '_status').val();
     let changeSuccess = $('#updateStatus');

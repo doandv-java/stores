@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Doan Stores</title>
+    <link href="/libs/users/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/libs/users/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/libs/users/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/libs/users/css/price-range.css" rel="stylesheet">
+    <link href="/libs/users/css/animate.css" rel="stylesheet">
+    <link href="/libs/users/css/main.css" rel="stylesheet">
+    <link href="/libs/users/css/responsive.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="/libs/users/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="/libs/users/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="/libs/users/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="/libs/users/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/libs/users/images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
+
+<body>
+<header id="header"><!--header-->
+    <div class="header_top"><!--header_top-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="contactinfo">
+                        <ul class="nav nav-pills">
+                            <li><a href="#"><i class="fa fa-phone"></i> 0975155726</a></li>
+                            <li><a href="#"><i class="fa fa-envelope"></i> doandv@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+        </div>
+    </div><!--/header_top-->
+
+    <div class="header-middle"><!--header-middle-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="logo pull-left">
+                        <a th:href="@{/home}"><img src="/libs/users/images/home/logo.png" alt=""/></a>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="shop-menu pull-right">
+                        <ul class="nav navbar-nav">
+                            <th:block th:if="${user==null}">
+                                <li><a th:href="@{/login}"><i class="fa fa-lock"></i> Đăng nhập</a>
+                                </li>
+                                <li><a th:href="@{/register}"><i class="fa fa-lock"></i> Đăng kí</a>
+                                </li>
+                            </th:block>
+                            <th:block th:unless="${user==null}">
+                                <li th:if="${user.role.equals('ROLE_ADMIN')||user.role.equals('ROLE_EMP')}"><a
+                                        th:href="@{/admin/home}"><i class="fa fa-home"></i> Trang quản trị</a></li>
+                                <li><a th:href="@{/profile}"><i class="fa fa-user"></i> Tài khoản</a></li>
+                                <li><a th:href="@{/order/history}"><i class="fa fa-star"></i> Đơn hàng</a></li>
+                                <li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <li><a th:href="@{/logout}"><i
+                                        class="fa fa-lock"></i> Đăng xuất</a></li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/header-middle-->
+
+    <div class="header-bottom"><!--header-bottom-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="mainmenu pull-left">
+                        <ul class="nav navbar-nav collapse navbar-collapse">
+                            <li><a th:href="@{/home}" class="active">Home</a></li>
+                            <li><a th:href="@{/shop}">Shop</a></li>
+                            <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li th:each="category:${categories}">
+                                        <a th:href="@{'/shop/category/'+${category.getId()}}"
+                                           th:text="${category.getName()}">Gamming</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown"><a href="#">Nhà cung cấp<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li th:each="supply:${supplies}">
+                                        <a th:href="@{'/shop/supply/'+${supply.getId()}}"
+                                           th:text="${supply.name}">Dell</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="search_box pull-right">
+                        <input type="text" placeholder="Search"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/header-bottom-->
+</header><!--/header-->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Danh mục</h2>
+                    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                        <div class="panel panel-default" th:each="category:${categories}">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a th:text="${category.name}"
+                                       th:href="@{'/shop/category/'+${category.getId()}}">Workstation</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div><!--/category-products-->
+
+                    <div class="brands_products"><!--brands_products-->
+                        <h2>Hãng sản xuất</h2>
+                        <div class="brands-name">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li th:each="supply:${supplies}"><a th:href="@{'/shop/supply/'+${supply.getId()}}"><span
+                                        th:text="${supply.name}">Dell</span></a></li>
+                            </ul>
+                        </div>
+                    </div><!--/brands_products-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="product-details"><!--product-details-->
+                    <div class="col-sm-5">
+                        <div class="view-product">
+                            <img th:src="@{${productDetail.imageLink}}" alt=""/>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information"><!--/product-information-->
+                            <h2 th:text="${productDetail.name}">Anne Klein Sleeveless Colorblock Scuba</h2>
+                            <p th:text="${productDetail.category.name}">Web ID: 1089772</p>
+                            <span>
+									<label>Số lượng:</label>
+									<input type="number" id="quantity" value="1"/>
+                                <button type="button" class="btn btn-default add-to-cart"
+                                        th:onclick="'addCart('+${productDetail.id}+')'">
+                                                <i class="fa fa-shopping-cart"></i>Add to cart</button>
+								</span>
+
+                            <p><b>Gía: </b><span th:text="${productDetail.price}">59</span>$</p>
+                            <p><b>Hãng sản xuất: </b><span th:text="${productDetail.producer}"></span></p>
+                            <p><b>CPU: </b> <span th:text="${productDetail.cpu}"></span></p>
+                            <p><b>RAM: </b> <span th:text="${productDetail.ram}"></span></p>
+                            <p><b>GPU: </b> <span th:text="${productDetail.gpu}"></span></p>
+                        </div><!--/product-information-->
+                    </div>
+                </div><!--/product-details-->
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-primary">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="alertTitle">Thêm thành công vào giỏ hàng!!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="footer"><!--Footer-->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <p class="pull-left">Copyright © 2020 Doan-Stores. All rights reserved.</p>
+                <p class="pull-right">Designed by DoanDV</p>
+            </div>
+        </div>
+    </div>
+
+</footer><!--/Footer-->
+
+
+<script src="/libs/users/js/jquery.js"></script>
+<script src="/libs/users/js/bootstrap.min.js"></script>
+<script src="/libs/users/js/jquery.scrollUp.min.js"></script>
+<script src="/libs/users/js/price-range.js"></script>
+<script src="/libs/users/js/jquery.prettyPhoto.js"></script>
+<script th:src="@{/libs/users/js/main.js}"></script>
+<script th:src="@{/js/home.js}"></script>
+</body>
+</html>

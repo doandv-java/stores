@@ -3,13 +3,16 @@ package doan.stores.bussiness.implement;
 import doan.stores.bussiness.CategoryService;
 import doan.stores.bussiness.ImageService;
 import doan.stores.bussiness.ProductService;
+import doan.stores.bussiness.SupplyService;
 import doan.stores.domain.Category;
 import doan.stores.domain.Product;
+import doan.stores.domain.Supply;
 import doan.stores.dto.request.ProductRequest;
 import doan.stores.persistenct.ProductRepository;
 import doan.stores.utils.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +30,41 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private SupplyService supplyService;
+
     @Override
     public List<Product> findProductsByDeleted(int deleted) {
         List<Product> products = productRepository.findProductsByDeletedIs(deleted);
-//        products.stream().forEach(product ->{
-//            Category category=categoryService.findCategoryById(product.getCategoryId());
-//            product.setCategory(category);
-//        });
+        return products;
+    }
+
+    @Override
+    public List<Product> findProductsByCategoryId(Long categoryId, int deleted) {
+        List<Product> products = productRepository.findProductsByCategoryIdIsAndDeletedIs(categoryId, deleted);
+        return products;
+    }
+
+    @Override
+    public List<Product> findProductsBySupplyId(Long supplyId, int deleted) {
+        Supply supply = supplyService.findSupplyById(supplyId);
+        List<Product> products = productRepository.findProductsByProducerIsAndDeletedIs(supply.getName(), deleted);
+        products.sort((product, t1) -> {
+            if (product.getPrice() > t1.getPrice()) {
+                return 1;
+            } else if (product.getPrice() == t1.getPrice()) {
+                return 0;
+            } else {
+                return -1;
+            }
+        });
+        return products;
+    }
+
+    @Override
+    public List<Product> findProductsByPageRequestAndDeletedAndCategoryOrSupply(Pageable pageable, int deleted, Long categoryId, Long supplyId) {
+        Supply supply = supplyService.findSupplyById(supplyId);
+        List<Product> products = productRepository.findProductsByCategoryIdIsOrProducerIsAndDeletedIs(categoryId, supply.getName(), deleted, pageable);
         return products;
     }
 

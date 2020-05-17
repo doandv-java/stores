@@ -6,7 +6,9 @@ import doan.stores.domain.OrderDetail;
 import java.util.List;
 
 public interface CartService {
-    void addCart(Long productId);
+    boolean addCart(Long productId);
+
+    boolean addCart(Long productId, int quantity);
 
     Order viewCart();
 

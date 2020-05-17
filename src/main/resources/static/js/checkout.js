@@ -15,7 +15,11 @@ function pay() {
         success: function (data) {
             if (data.status === 200) {
                 $('#PayModal').modal('show');
-                window.location.href = window.location.origin + '/home';
+                $('#BtnOk').click(function () {
+                    $('#PayModal').modal('hide');
+                    window.location.href = window.location.origin + '/home';
+
+                });
             } else {
                 window.location.href = window.location.origin + '/login';
             }

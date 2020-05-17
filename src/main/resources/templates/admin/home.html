@@ -23,8 +23,23 @@
     <main class="pt-5 mx-lg-5">
         <div class="container-fluid mt-5">
             <!--Grid row-->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Tổng tiền:<span th:text="${total}">1000</span>$</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>Số khách hàng:<span th:text="${customers}">1000</span> khách hàng</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row wow fadeIn">
-
                 <!--Grid column-->
                 <div class="col-md-6 mb-4">
 
@@ -39,9 +54,9 @@
                                 <!-- Table head -->
                                 <thead class="blue-grey lighten-4">
                                 <tr>
-                                    <th>Ảnh</th>
-                                    <th>Nhân viên</th>
-                                    <th>Email</th>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Nhà cung cấp</th>
                                     <th>Số lượng đơn hàng</th>
                                 </tr>
                                 </thead>
@@ -49,23 +64,11 @@
 
                                 <!-- Table body -->
                                 <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cell 1</td>
-                                    <td>Cell 2</td>
-                                    <td>Cell 3</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Cell 4</td>
-                                    <td>Cell 5</td>
-                                    <td>Cell 6</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Cell 7</td>
-                                    <td>Cell 8</td>
-                                    <td>Cell 9</td>
+                                <tr th:each="productHot:${productHots}">
+                                    <th scope="row" th:text="${productHot.getProductId()}">1</th>
+                                    <td th:text="${productHot.name}">Cell 1</td>
+                                    <td th:text="${productHot.producer}">Cell 2</td>
+                                    <td th:text="${productHot.countOrder}">Cell 3</td>
                                 </tr>
                                 </tbody>
                                 <!-- Table body -->
@@ -104,7 +107,7 @@
                                 <!-- Table body -->
                                 <tbody>
                                 <tr th:each="warehouse:${warehouses}">
-                                    <td th:text="${warehouse.product.name}" ></td>
+                                    <td th:text="${warehouse.product.name}"></td>
                                     <td th:text="${warehouse.product.category.name}"></td>
                                     <td th:text="${warehouse.quantity}">$</td>
                                 </tr>

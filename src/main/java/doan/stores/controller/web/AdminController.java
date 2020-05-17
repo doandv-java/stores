@@ -7,6 +7,7 @@ import doan.stores.dto.request.ProductRequest;
 import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.dto.response.ErrorResponse;
+import doan.stores.dto.response.ProductHot;
 import doan.stores.enums.RoleEnum;
 import doan.stores.enums.StatusEnum;
 import doan.stores.utils.Constants;
@@ -54,14 +55,23 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderItemService orderItemService;
+
     @GetMapping("/home")
     public ModelAndView viewHome() {
         ModelAndView mav = new ModelAndView();
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserName(principal.getUsername());
-        List<Warehouse> warehouses = warehouseService.top5Warehouse();
+        List<Warehouse> warehouses = warehouseService.top12Warehouse();
+        List<ProductHot> productHots = orderItemService.topProductHot();
+        long total = orderService.getTotal();
+        List<User> customers = userService.findUsersByRole(RoleEnum.ROLE_CUSTOMER);
         mav.addObject("user", user);
         mav.addObject("warehouses", warehouses);
+        mav.addObject("productHots", productHots);
+        mav.addObject("total", total);
+        mav.addObject("customers", customers.size());
         mav.setViewName("admin/home");
         return mav;
     }

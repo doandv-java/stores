@@ -65,7 +65,7 @@
                                 <li th:if="${user.role.equals('ADMIN')||user.role.equals('EMPLOYEE')}"><a
                                         th:href="@{/admin/home}"><i class="fa fa-home"></i> Trang quản trị</a></li>
                                 <li><a th:href="@{/profile}"><i class="fa fa-user"></i> Tài khoản</a></li>
-                                <li><a th:href="@{/history-order}"><i class="fa fa-star"></i> Đơn hàng</a></li>
+                                <li><a th:href="@{/order/history}"><i class="fa fa-star"></i> Đơn hàng</a></li>
                                 <li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                 <li><a th:href="@{/logout}"><i
                                         class="fa fa-lock"></i> Đăng xuất</a></li>
@@ -93,19 +93,23 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a th:href="@{/home}" class="active">Home</a></li>
+                            <li><a th:href="@{/shop}">Shop</a></li>
                             <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="category:${categories}"><a href="#" th:text="${category.getName()}">Gamming</a>
+                                    <li th:each="category:${categories}"><a
+                                            th:href="@{'/shop/category/'+${category.getId()}}"
+                                            th:text="${category.getName()}">Gamming</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="dropdown"><a href="#">Nhà cung cấp<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="supply:${supplies}"><a href="blog.html"
-                                                                        th:text="${supply.name}">Dell</a></li>
+                                    <li th:each="supply:${supplies}">
+                                        <a th:href="@{'/shop/supply/'+${supply.getId()}}"
+                                           th:text="${supply.name}">Dell</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Giới thiệu</a></li>
+
                         </ul>
                     </div>
                 </div>
@@ -138,20 +142,12 @@
                     <div class="shopper-info">
                         <p>Thông tin shop</p>
                         <form>
-                            <input type="text" placeholder="Tên" disabled="true">
-                            <input type="text" placeholder="Email" disabled="true">
-                            <input type="password" placeholder="Địa chỉ" disabled="true">
-                            <input type="password" placeholder="Số điện thoại" disabled="true">
-                            <input type="text" placeholder="Ngân hàng" disabled="true">
-                            <input type="text" placeholder="Số tài khoản" disabled="true">
-                            <div>
-                                    <span>
-						<label><input type="checkbox" name="payment">Trả tiền khi nhận hàng</label>
-					</span>
-                                <span>
-						<label><input type="checkbox" name="payment"> Chuyển tiền qua tài khoản</label>
-					</span>
-                            </div>
+                            <input type="text" th:value="${company.name}" placeholder="Tên" disabled="true">
+                            <input type="text" th:value="${company.email}" placeholder="Email" disabled="true">
+                            <input type="text" th:value="${company.address}" placeholder="Địa chỉ" disabled="true">
+                            <input type="text" th:value="${company.phone}" placeholder="Số điện thoại" disabled="true">
+                            <input type="text" th:value="${company.bank}" placeholder="Ngân hàng" disabled="true">
+                            <input type="text" th:value="${company.account}" placeholder="Số tài khoản" disabled="true">
                         </form>
                     </div>
 
@@ -197,7 +193,7 @@
                         <table class="table table-condensed total-result">
                             <tr>
                                 <td>Total</td>
-                                <td><span th:text="${order.getTotal()}">$61</span></td>
+                                <td><span th:text="${order.getTotal()}">$61</span>$</td>
                             </tr>
                         </table>
                     </td>
@@ -227,8 +223,7 @@
                     <p id="dialog_text">Thanh toán thành công!!!!</p>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" th:href="@{/home}" class="btn btn-secondary" data-dismiss="modal">Trang chủ</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    <button type="button" id="BtnOk" class="btn btn-primary" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

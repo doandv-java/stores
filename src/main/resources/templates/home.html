@@ -65,7 +65,7 @@
                                 <li th:if="${user.role.equals('ROLE_ADMIN')||user.role.equals('ROLE_EMP')}"><a
                                         th:href="@{/admin/home}"><i class="fa fa-home"></i> Trang quản trị</a></li>
                                 <li><a th:href="@{/profile}"><i class="fa fa-user"></i> Tài khoản</a></li>
-                                <li><a href="#"><i class="fa fa-star"></i> Đơn hàng</a></li>
+                                <li><a th:href="@{/order/history}"><i class="fa fa-star"></i> Đơn hàng</a></li>
                                 <li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                 <li><a th:href="@{/logout}"><i
                                         class="fa fa-lock"></i> Đăng xuất</a></li>
@@ -93,25 +93,21 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><a th:href="@{/home}" class="active">Home</a></li>
+                            <li><a th:href="@{/shop}">Shop</a></li>
                             <li class="dropdown"><a href="#">Danh mục<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="category:${categories}"><a href="#" th:text="${category.getName()}">Gamming</a>
+                                    <li th:each="category:${categories}"><a
+                                            th:href="@{'/shop/category/'+${category.getId()}}"
+                                            th:text="${category.getName()}">Gamming</a>
                                     </li>
-                                    <!--                                    <li><a href="#">Office</a></li>-->
-                                    <!--                                    <li><a href="#">Graphics</a></li>-->
-                                    <!--                                    <li><a href="#">Workstation</a></li>-->
                                 </ul>
                             </li>
                             <li class="dropdown"><a href="#">Nhà cung cấp<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-                                    <li th:each="supply:${supplies}"><a href="blog.html"
+                                    <li th:each="supply:${supplies}"><a th:href="@{'/shop/supply/'+${supply.getId()}}"
                                                                         th:text="${supply.name}">Dell</a></li>
-                                    <!--                                    <li><a href="blog-single.html">Asus</a></li>-->
-                                    <!--                                    <li><a href="blog-single.html">HP</a></li>-->
-                                    <!--                                    <li><a href="blog-single.html">Mac</a></li>-->
                                 </ul>
                             </li>
-                            <li><a href="#">Giới thiệu</a></li>
                         </ul>
                     </div>
                 </div>
@@ -145,7 +141,8 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <img src="/libs/users/images/home/girl1.jpg" th:src="@{${advertise.imageLink}}"
+                                <img style="width: 200px;height: 100px;" src="/libs/users/images/home/girl1.jpg"
+                                     th:src="@{${advertise.imageLink}}"
                                      class="girl img-responsive" alt=""/>
                                 <!--                                <img src="/libs/users/images/home/pricing.png" class="pricing" alt=""/>-->
                             </div>
@@ -157,23 +154,11 @@
                                 <p></p>
                             </div>
                             <div class="col-sm-6">
-                                <img src="/libs/users/images/home/girl2.jpg" class="girl img-responsive" alt=""/>
+                                <img src="/libs/users/images/home/girl2.jpg"
+                                     class="girl img-responsive" alt=""/>
                                 <img src="/libs/users/images/home/pricing.png" class="pricing" alt=""/>
                             </div>
                         </div>
-
-                        <!--                        <div class="item">-->
-                        <!--                            <div class="col-sm-6">-->
-                        <!--                                <h1><span>Doan</span>-Stores</h1>-->
-                        <!--                                <h2>Title Advetise</h2>-->
-                        <!--                                <p>Content Advertise</p>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="col-sm-6">-->
-                        <!--                                <img src="/libs/users/images/home/girl3.jpg" class="girl img-responsive" alt=""/>-->
-                        <!--                                <img src="/libs/users/images/home/pricing.png" class="pricing" alt=""/>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-
                     </div>
 
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -199,7 +184,9 @@
 
                         <div class="panel panel-default" th:each="category:${categories}">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a th:text="${category.name}" href="#">Workstation</a></h4>
+                                <h4 class="panel-title"><a th:text="${category.name}"
+                                                           th:href="@{'/shop/category/'+${category.getId()}}">Workstation</a>
+                                </h4>
                             </div>
                         </div>
                     </div><!--/category-products-->
@@ -208,7 +195,7 @@
                         <h2>Hãng sản xuất</h2>
                         <div class="brands-name">
                             <ul class="nav nav-pills nav-stacked">
-                                <li th:each="supply:${supplies}"><a href="#"><span
+                                <li th:each="supply:${supplies}"><a th:href="@{'/shop/supply/'+${supply.getId()}}"><span
                                         th:text="${supply.name}">Dell</span></a></li>
                             </ul>
                         </div>
@@ -228,12 +215,18 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
-                                         src="/libs/users/images/home/product1.jpg"
-                                         alt=""/>
+                                    <a th:href="@{'/product/'+${product.id}}">
+                                        <img style="height: 100px;height: 100px;"
+                                             th:src="@{${product.imageLink}}"
+                                             src="/libs/users/images/home/product1.jpg"
+                                             alt=""/>
+                                    </a>
                                     <h2>$<span th:text="${product.price}">Cost</span></h2>
                                     <p th:text="${product.name}">Name product</p>
-                                    <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'" class="btn btn-default add-to-cart">
+                                    <a th:href="@{'/product/'+${product.id}}"
+                                       class="btn btn-default add-to-cart"> Xem chi tiết</a>
+                                    <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
+                                       class="btn btn-default add-to-cart">
                                         <i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </div>
                             </div>
@@ -242,110 +235,120 @@
                     </div>
                 </div><!--features_items-->
 
-                <div class="category-tab"><!--category-tab-->
-                    <div class="col-sm-12">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#gaming" data-toggle="tab">Gaming</a></li>
-                            <li><a href="#office" data-toggle="tab">Office</a></li>
-                            <li><a href="#business" data-toggle="tab">Business</a></li>
-                            <li><a href="#graphics" data-toggle="tab">Graphics</a></li>
-                            <li><a href="#workstation" data-toggle="tab">Workstation</a></li>
-                        </ul>
-                    </div>
-                    <div class="tab-content">
-                        <div class="tab-pane fade active in" id="gaming">
-                            <div class="col-sm-3" th:each="product:${products}">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
-                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                            <p th:text="${product.name}">Name products</p>
-                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
-                                               class="btn btn-default add-to-cart">
-                                                <i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!--                <div class="category-tab">&lt;!&ndash;category-tab&ndash;&gt;-->
+                <!--                    <div class="col-sm-12">-->
+                <!--                        <ul class="nav nav-tabs">-->
+                <!--                            <li class="active"><a href="#gaming" data-toggle="tab">Gaming</a></li>-->
+                <!--                            <li><a href="#office" data-toggle="tab">Office</a></li>-->
+                <!--                            <li><a href="#business" data-toggle="tab">Business</a></li>-->
+                <!--                            <li><a href="#graphics" data-toggle="tab">Graphics</a></li>-->
+                <!--                            <li><a href="#workstation" data-toggle="tab">Workstation</a></li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
+                <!--                    <div class="tab-content">-->
+                <!--                        <div class="tab-pane fade active in" id="gaming">-->
+                <!--                            <div class="col-sm-3" th:each="product:${products}">-->
+                <!--                                <div class="product-image-wrapper">-->
+                <!--                                    <div class="single-products">-->
+                <!--                                        <div class="productinfo text-center">-->
+                <!--                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"-->
+                <!--                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>-->
+                <!--                                            <h2>$<span th:text="${product.price}">Cost</span></h2>-->
+                <!--                                            <p th:text="${product.name}">Name products</p>-->
+                <!--                                            <a th:href="@{'/product/'+${product.id}}"-->
+                <!--                                               class="btn btn-default add-to-cart"> Xem chi tiết</a>-->
+                <!--                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"-->
+                <!--                                               class="btn btn-default add-to-cart">-->
+                <!--                                                <i class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
 
-                        </div>
+                <!--                        </div>-->
 
-                        <div class="tab-pane fade" id="office">
-                            <div class="col-sm-3" th:each="product:${products}">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
-                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                            <p th:text="${product.name}">Name products</p>
-                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
-                                               class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!--                        <div class="tab-pane fade" id="office">-->
+                <!--                            <div class="col-sm-3" th:each="product:${products}">-->
+                <!--                                <div class="product-image-wrapper">-->
+                <!--                                    <div class="single-products">-->
+                <!--                                        <div class="productinfo text-center">-->
+                <!--                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"-->
+                <!--                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>-->
+                <!--                                            <h2>$<span th:text="${product.price}">Cost</span></h2>-->
+                <!--                                            <p th:text="${product.name}">Name products</p>-->
+                <!--                                            <a th:href="@{'/product/'+${product.id}}"-->
+                <!--                                               class="btn btn-default add-to-cart"> Xem chi tiết</a>-->
+                <!--                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"-->
+                <!--                                               class="btn btn-default add-to-cart"><i-->
+                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
 
-                        <div class="tab-pane fade" id="business">
-                            <div class="col-sm-3" th:each="product:${products}">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"
-                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                            <p th:text="${product.name}">Name products</p>
-                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
-                                               class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!--                        <div class="tab-pane fade" id="business">-->
+                <!--                            <div class="col-sm-3" th:each="product:${products}">-->
+                <!--                                <div class="product-image-wrapper">-->
+                <!--                                    <div class="single-products">-->
+                <!--                                        <div class="productinfo text-center">-->
+                <!--                                            <img style="height: 100px;height: 100px;" th:src="@{${product.imageLink}}"-->
+                <!--                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>-->
+                <!--                                            <h2>$<span th:text="${product.price}">Cost</span></h2>-->
+                <!--                                            <p th:text="${product.name}">Name products</p>-->
+                <!--                                            <a th:href="@{'/product/'+${product.id}}"-->
+                <!--                                               class="btn btn-default add-to-cart"> Xem chi tiết</a>-->
+                <!--                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"-->
+                <!--                                               class="btn btn-default add-to-cart"><i-->
+                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
 
-                        <div class="tab-pane fade" id="graphics">
-                            <div class="col-sm-3" th:each="product:${products}">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img th:src="@{${product.imageLink}}"
-                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                            <p th:text="${product.name}">Name products</p>
-                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
-                                               class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <!--                        <div class="tab-pane fade" id="graphics">-->
+                <!--                            <div class="col-sm-3" th:each="product:${products}">-->
+                <!--                                <div class="product-image-wrapper">-->
+                <!--                                    <div class="single-products">-->
+                <!--                                        <div class="productinfo text-center">-->
+                <!--                                            <img th:src="@{${product.imageLink}}"-->
+                <!--                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>-->
+                <!--                                            <h2>$<span th:text="${product.price}">Cost</span></h2>-->
+                <!--                                            <p th:text="${product.name}">Name products</p>-->
+                <!--                                            <a th:href="@{'/product/'+${product.id}}"-->
+                <!--                                               class="btn btn-default add-to-cart"> Xem chi tiết</a>-->
+                <!--                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"-->
+                <!--                                               class="btn btn-default add-to-cart"><i-->
+                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
 
-                        </div>
+                <!--                        </div>-->
 
-                        <div class="tab-pane fade" id="workstation">
-                            <div class="col-sm-3" th:each="product:${products}">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img th:src="@{${product.imageLink}}"
-                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>
-                                            <h2>$<span th:text="${product.price}">Cost</span></h2>
-                                            <p th:text="${product.name}">Name products</p>
-                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"
-                                               class="btn btn-default add-to-cart"><i
-                                                    class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/category-tab-->
+                <!--                        <div class="tab-pane fade" id="workstation">-->
+                <!--                            <div class="col-sm-3" th:each="product:${products}">-->
+                <!--                                <div class="product-image-wrapper">-->
+                <!--                                    <div class="single-products">-->
+                <!--                                        <div class="productinfo text-center">-->
+                <!--                                            <img th:src="@{${product.imageLink}}"-->
+                <!--                                                 src="/libs/users/images/home/gallery1.jpg" alt=""/>-->
+                <!--                                            <h2>$<span th:text="${product.price}">Cost</span></h2>-->
+                <!--                                            <p th:text="${product.name}">Name products</p>-->
+                <!--                                            <a th:href="@{'/product/'+${product.id}}"-->
+                <!--                                               class="btn btn-default add-to-cart"> Xem chi tiết</a>-->
+                <!--                                            <a href="javascript:void(0)" th:onclick="'Cart('+${product.id}+')'"-->
+                <!--                                               class="btn btn-default add-to-cart"><i-->
+                <!--                                                    class="fa fa-shopping-cart"></i>Add to cart</a>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>&lt;!&ndash;/category-tab&ndash;&gt;-->
             </div>
         </div>
     </div>
@@ -360,10 +363,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Thêm thành công vào giỏ hàng!!</p>
+                    <p id="alertTitle">Thêm thành công vào giỏ hàng!!</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>

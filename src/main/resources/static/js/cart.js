@@ -4,10 +4,11 @@ $(document).ready(function () {
 
 function changeQuantity(item_id, type) {
     let quantity_input = $('#' + item_id + '_quantity');
+    let quantityOld = quantity_input.val();
     let quantity = getQuantity(item_id, type);
     if (quantity <= 0) {
         alert("So luong khong hop le");
-        quantity_input.val(1);
+        quantity_input.val(quantityOld);
     } else {
         $.ajax({
             type: 'PUT',
@@ -17,8 +18,10 @@ function changeQuantity(item_id, type) {
             success: function (data) {
                 if (data.status === 200) {
                     quantity_input.val(quantity);
-                } else {
+                } else if (data.status === 500) {
                     alert("So luong hang đặt chưa đủ hàng");
+                } else {
+                    window.location.href = window.location.origin + '/login';
                 }
             }
 
@@ -29,7 +32,7 @@ function changeQuantity(item_id, type) {
 }
 
 function orderCart() {
-
+    window.location.href = window.origin + '/checkout';
 }
 
 function getQuantity(item_id, type) {

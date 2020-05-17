@@ -13,5 +13,11 @@ public interface WarehouseService {
 
     Warehouse findWarehouse(Long productID);
 
-    List<Warehouse> top5Warehouse();
+    List<Warehouse> top12Warehouse();
+
+    void addCart(Long productId, int quantity);
+
+    void updateQuantity(Long productId, int quantity);
+
+    void cancelOrder(Long orderId);
 }
