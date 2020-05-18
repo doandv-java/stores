@@ -2,6 +2,7 @@
 Stores for Laptop Doan Duong Company
 * Database: Database sql into folder db
 * Image : folder upload
+* github: https://github.com/doandv-java/stores
 # install 
 * excute sql db into postgressql
 * run :"mvn clean install"
