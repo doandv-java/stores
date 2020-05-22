@@ -21,4 +21,5 @@ public interface CategoryService {
 
     boolean existCategory(String name, String nameOld);
 
+    List<Long> getCategoryId(String name);
 }

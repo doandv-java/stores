@@ -451,4 +451,68 @@ public class UserController {
         mav.setViewName("product_detail");
         return mav;
     }
+    @GetMapping("/search")
+    public ModelAndView searchProduct(@RequestParam("keyword") String keyword) {
+        ModelAndView mav = new ModelAndView();
+        int pageNumber = 1;
+        User user = commonService.getPrincipal();
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
+        List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
+        List<Advertise> advertises = advertiseService.findAllAdvertise();
+        List<Product> products = productService.searchProduct(keyword);
+        int pageTotal = 0;
+        int size = 12;
+        List<Product> pageProducts;
+        if (products.size() > 0) {
+            if (products.size() % size != 0) {
+                pageTotal = products.size() / size + 1;
+            } else {
+                pageTotal = products.size() / size;
+            }
+        }
+        int startItem = (pageNumber - 1) * size;
+        int toIndex = Math.min(startItem + size, products.size());
+        pageProducts = products.subList(startItem, toIndex);
+        mav.addObject("user", user);
+        mav.addObject("categories", categories);
+        mav.addObject("supplies", supplies);
+        mav.addObject("advertises", advertises);
+        mav.addObject("products", pageProducts);
+        mav.addObject("pageTotal", pageTotal);
+        mav.addObject("keyword", keyword);
+        mav.setViewName("shop-search");
+        return mav;
+    }
+
+    @GetMapping("/search/{page}")
+    public ModelAndView searchProduct(@RequestParam("keyword") String keyword, @PathVariable("page") int page) {
+        ModelAndView mav = new ModelAndView();
+        User user = commonService.getPrincipal();
+        List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
+        List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
+        List<Advertise> advertises = advertiseService.findAllAdvertise();
+        List<Product> products = productService.searchProduct(keyword);
+        int pageTotal = 0;
+        int size = 12;
+        List<Product> pageProducts;
+        if (products.size() > 0) {
+            if (products.size() % size != 0) {
+                pageTotal = products.size() / size + 1;
+            } else {
+                pageTotal = products.size() / size;
+            }
+        }
+        int startItem = (page - 1) * size;
+        int toIndex = Math.min(startItem + size, products.size());
+        pageProducts = products.subList(startItem, toIndex);
+        mav.addObject("user", user);
+        mav.addObject("categories", categories);
+        mav.addObject("supplies", supplies);
+        mav.addObject("advertises", advertises);
+        mav.addObject("products", pageProducts);
+        mav.addObject("pageTotal", pageTotal);
+        mav.addObject("keyword", keyword);
+        mav.setViewName("shop-search");
+        return mav;
+    }
 }

@@ -28,4 +28,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCategoryIdIsOrProducerIsAndDeletedIs(Long categoryID, String producer, int deleted, Pageable page);
 
+    List<Product> findProductsByNameContainsOrCategoryIdInAndDeletedIs(String name, List<Long> categoryId, int deleted);
+
+    List<Product> getProductsByNameContainsAndDeletedIs(String name, int deleted);
 }

@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,6 +72,21 @@ public class CategoryServiceImpl implements CategoryService {
         productRepository.saveAll(products);
         category.setActive(Constants.DELETE.TRUE);
         categoryRepository.save(category);
+    }
+
+    public List<Long> getCategoryId(String name) {
+        String like = '%' + StringUtils.trimToEmpty(name) + '%';
+        List<Category> categories = categoryRepository.findCategoriesByNameLike(like);
+        if (categories.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Category category : categories) {
+                ids.add(category.getId());
+            }
+            return ids;
+        }
+
     }
 
     @Override

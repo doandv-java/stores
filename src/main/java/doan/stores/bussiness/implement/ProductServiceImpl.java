@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,6 +66,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findProductsByPageRequestAndDeletedAndCategoryOrSupply(Pageable pageable, int deleted, Long categoryId, Long supplyId) {
         Supply supply = supplyService.findSupplyById(supplyId);
         List<Product> products = productRepository.findProductsByCategoryIdIsOrProducerIsAndDeletedIs(categoryId, supply.getName(), deleted, pageable);
+        return products;
+    }
+
+    @Override
+    public List<Product> searchProduct(String keyword) {
+        keyword = StringUtils.trimToEmpty(keyword);
+        List<Long> categoryIds = categoryService.getCategoryId(keyword);
+        List<Product> products = new ArrayList<>();
+        if (categoryIds == null) {
+            products = productRepository.getProductsByNameContainsAndDeletedIs(keyword, Constants.DELETE.FALSE);
+        } else {
+            products = productRepository.findProductsByNameContainsOrCategoryIdInAndDeletedIs(keyword, categoryIds, Constants.DELETE.FALSE);
+        }
         return products;
     }
 

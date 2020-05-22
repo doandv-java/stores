@@ -15,7 +15,8 @@ public interface ProductService {
     List<Product> findProductsBySupplyId(Long supplyId, int deleted);
 
     List<Product> findProductsByPageRequestAndDeletedAndCategoryOrSupply(Pageable pageable, int deleted,
-                                                                         Long categoryId, Long supplyId);
+                                                                             Long categoryId, Long supplyId);
+    List<Product> searchProduct(String keyword);
 
     void saveProduct(ProductRequest request);
 
