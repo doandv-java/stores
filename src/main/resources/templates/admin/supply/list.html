@@ -36,7 +36,8 @@
                             <div class="table-striped">
                                 <table class="table text-center" id="supplyTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Tên</th>
                                         <th>Mô tả</th>
                                         <th>Số điện thoại</th>
@@ -51,6 +52,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="supply:${supplies}" th:id="${supply.id}">
+                                        <td style="display:none;" th:text="${supply.id}"></td>
                                         <td th:text="${supply.name}"></td>
                                         <td th:text="${supply.detail}"></td>
                                         <td th:text="${supply.phone}"></td>

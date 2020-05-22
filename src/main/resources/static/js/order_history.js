@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('#orderHistoryTable').dataTable({
         "pageLength": 5,
         "lengthChange": false,
+        "order":[[ 0, "desc" ]]
     });
 });
 

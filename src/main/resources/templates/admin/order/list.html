@@ -36,7 +36,7 @@
                             <div class="table-striped table-fixed">
                                 <table class="table text-center" id="orderTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color:#12b6ef;">
                                         <th>Số hóa đơn</th>
                                         <th>Người đặt hàng</th>
                                         <th>Email</th>
@@ -48,12 +48,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="order :${orders}" th:id="${order.id}">
+                                    <tr th:each="order :${orders}" th:id="${order.id}" th:class="'status_'+${order.status}">
                                         <td th:text="${order.id}"></td>
                                         <td th:text="${order.getUser().getName()}"></td>
                                         <td th:text="${order.getUser().getUserName()}"></td>
                                         <td th:text="${order.getUser().getPhone()}"></td>
-                                        <td th:text="${#dates.format(order.getCreateDay(),'dd/MM/yyyy hh:MM')}"></td>
+                                        <td th:text="${#dates.format(order.getCreateDay(),'dd/MM/yyyy hh:mm')}"></td>
                                         <td th:text="${order.total}"></td>
                                         <td>
                                             <select th:onchange="'changeStatus('+${order.id}+')'"

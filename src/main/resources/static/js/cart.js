@@ -6,10 +6,16 @@ function changeQuantity(item_id, type) {
     let quantity_input = $('#' + item_id + '_quantity');
     let quantityOld = quantity_input.val();
     let quantity = getQuantity(item_id, type);
-    if (quantity <= 0) {
-        alert("So luong khong hop le");
+    if(Number.isNaN(quantity)){
+        alert("Số lượng nhập không hợp lệ!!");
+        quantity_input.val(1);
+    }else if (quantity <= 0) {
+        alert("Số lượng nhập không hợp lệ!!");
         quantity_input.val(quantityOld);
-    } else {
+    }else if(quantity>=10){
+        alert("Số lượng sản phẩm tối đa là 10 sản phẩm 1 giỏ hàng!!");
+        quantity_input.val(quantityOld);
+    }else {
         $.ajax({
             type: 'PUT',
             url: 'cart/' + item_id + '?quantity=' + quantity,
@@ -19,7 +25,9 @@ function changeQuantity(item_id, type) {
                 if (data.status === 200) {
                     quantity_input.val(quantity);
                 } else if (data.status === 500) {
-                    alert("So luong hang đặt chưa đủ hàng");
+                    alert("Số lượng hàng trong kho chưa đủ số lượng hàng!!");
+                }else if (data.status === 501) {
+                    alert("Số lượng sản phẩm tối đa là 10 sản phẩm 1 giỏ hàng!!");
                 } else {
                     window.location.href = window.location.origin + '/login';
                 }

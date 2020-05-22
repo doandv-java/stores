@@ -64,7 +64,9 @@ public class CartController {
         User user = commonService.getPrincipal();
         if (user == null) {
             map.put("status", 101);
-        } else {
+        } else if(quantity>=10){
+            map.put("status", 501);
+        }else {
             if (cartService.updateQuantity(itemId, quantity)) {
                 map.put("status", 200);
             } else {

@@ -16,6 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findCategoryByNameIs(String name);
 
     Category findCategoryById(Long id);
-
-    List<Category> findCategoriesByNameLike(String name);
+//    @Query(name="SELECT c FROM Categories c WHERE UPPER(c.name) LIKE CONCAT('%',:name,'%')",nativeQuery = true)
+    List<Category> findCategoriesByNameIsContaining(String name);
 }

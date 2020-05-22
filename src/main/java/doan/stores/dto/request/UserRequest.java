@@ -31,7 +31,7 @@ public class UserRequest {
 
     private String address;
 
-    @Pattern(regexp = "^[0-9]{9,12}$", message = "Số d điện thoại không hợp lệ")
+    @Pattern(regexp = "^[0-9]{9,12}$", message = "Số điện thoại không hợp lệ")
     private String phone;
 
     private String imageLink;

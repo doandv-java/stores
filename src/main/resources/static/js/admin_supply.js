@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#supplyTable').dataTable({
         "pageLength": 5,
         "lengthChange": false,
+        "order":[[ 0, "desc" ]]
     });
 
     resetErrorSupply();

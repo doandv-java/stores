@@ -1,9 +1,16 @@
 $(document).ready(function () {
-    $('#warehouseTable').dataTable();
+    $('#warehouseTable').dataTable({
+        "pageLength": 5,
+        "lengthChange": false,
+        "order": [[0, "desc"]]
+    });
     $('#submitBtn').click(function () {
         addWarehouse();
     });
-
+    $('#cancelBtn').click(function () {
+        window.location.href = window.location.origin + "/admin/warehouse";
+    });
+    validateWarehouse();
 });
 
 function updateWarehouse(id, productId) {
@@ -68,3 +75,23 @@ function addWarehouse() {
     });
 }
 
+function showError(id, message) {
+    let element = $('#' + id);
+    let error = $('#' + id + "_errors");
+    element.addClass("input_error");
+    error.text(message);
+}
+
+function hideError(id) {
+    let element = $('#' + id);
+    element.removeClass('input_error');
+    let error = $('#' + id + "_errors");
+    error.text('');
+}
+
+function validateWarehouse() {
+
+    $('#quantity').keyup(function () {
+        hideError('quantity');
+    });
+}

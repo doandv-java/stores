@@ -26,6 +26,7 @@ public class Category {
     @Column(name = "active")
     private int active;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     List<Product> products;
 }

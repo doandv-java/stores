@@ -61,3 +61,15 @@
 .error {
     color: red;
 }
+.status_0{
+    background-color: #ded972;
+}
+.status_1{
+    background-color: #ced3d8;
+}
+.status_2{
+    background-color: #96f198;
+}
+.status_3{
+    background-color: #d43f3a;
+}

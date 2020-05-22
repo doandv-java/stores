@@ -20,4 +20,6 @@ public interface SupplyService {
     Supply findSupplyById(Long id);
 
     void changeActive(Long id, int active);
+
+    List<Long> getSupplyIdsByName(String name);
 }

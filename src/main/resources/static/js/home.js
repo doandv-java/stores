@@ -1,7 +1,11 @@
 $(document).ready(function () {
-    $('#quantity').onchange(function () {
+    $('#quantity').change(function () {
         let quantity = $('#quantity').val();
         if (quantity <= 0) {
+            alert("Số lượng sản phẩm mua hàng không hợp lệ");
+            $('#quantity').val(1);
+        } else if (quantity >= 10) {
+            alert("Số lượng sản phẩm tối đa là 10 sản phẩm 1 giỏ hàng!!");
             $('#quantity').val(1);
         }
     });

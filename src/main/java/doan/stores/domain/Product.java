@@ -1,7 +1,6 @@
 package doan.stores.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -27,7 +26,7 @@ public class Product {
     @Column(name = "category_id", insertable = false, updatable = false)
     private Long categoryId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
 

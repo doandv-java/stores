@@ -33,6 +33,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseBody
     private Map<String, Object> deleteProduct(@PathVariable("id") Long productId) {
         Map<String, Object> map = new HashMap<>();
         Product product = productService.findProductById(productId);
@@ -40,6 +41,7 @@ public class ProductController {
             map.put("status", 101);
             map.put("products", "Product không tồn tại");
         } else {
+
             map.put("status", 200);
             productService.deleteProduct(productId);
         }

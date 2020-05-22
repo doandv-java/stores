@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#categoryTable').dataTable({
         "pageLength": 5,
         "lengthChange": false,
+        "order":[[ 0, "desc" ]]
     });
 
     resetErrorCategory();

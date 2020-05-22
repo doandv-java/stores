@@ -34,9 +34,10 @@
                         <div class="card-body">
                             <h4 class="card-title text-center">Danh sách nhân viên</h4>
                             <div class="table-striped table-fixed">
-                                <table class="table text-center" id="employeeTable">
+                                <table  class="table text-center" id="employeeTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Ảnh</th>
                                         <th>Email</th>
                                         <th>Tên</th>
@@ -50,6 +51,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="employee :${employees}" th:id="${employee.id}">
+                                        <td style="display:none;" th:text="${employee.id}"></td>
                                         <td class="ui-icon-image"><img  style="width:80px; height: 80px;" th:src="${employee.imageLink}"></td>
                                         <td th:text="${employee.userName}"></td>
                                         <td th:text="${employee.name}"></td>

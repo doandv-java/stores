@@ -5,14 +5,17 @@ import doan.stores.bussiness.WarehouseService;
 import doan.stores.domain.Order;
 import doan.stores.domain.OrderDetail;
 import doan.stores.domain.Product;
+import doan.stores.dto.response.StaticsOrderTotal;
 import doan.stores.enums.StatusEnum;
 import doan.stores.persistenct.OrderDetailRepositosy;
 import doan.stores.persistenct.OrderRepository;
 import doan.stores.persistenct.ProductRepository;
 import doan.stores.utils.Constants;
+import doan.stores.utils.Dates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -82,14 +85,36 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Product> top12ProductHot() {
         Long[] listProductId = orderDetailRepositosy.findTop12ProductId();
-        List<Product> products = productRepository.findProductsByIdInAndDeletedIs(listProductId, Constants.DELETE.FALSE);
+        List<Product> products = productRepository.findProductsByIdInAndDeletedIsOrderByPriceAscNameDesc(listProductId, Constants.DELETE.FALSE);
         return products;
     }
 
     @Override
-    public long getTotal() {
-        long total;
+    public StaticsOrderTotal getTotal() {
+        Date now = Dates.now();
+        String month = Dates.format(now, "MM");
+        String day = Dates.format(now, "yyyy-MM-dd");
+        String year = Dates.format(now, "yyyy");
+
         List<Order> orders = orderRepository.findOrdersByStatusIs(StatusEnum.SUCCESS.getCode());
+        StaticsOrderTotal orderTotal = new StaticsOrderTotal();
+        if (orders.isEmpty()) {
+            orderTotal.setTotalDay(0L);
+            orderTotal.setTotalMonth(0L);
+            orderTotal.setTotalYear(0L);
+        }else{
+            Long totalYear=orders.stream().filter(order ->Dates.format(order.getCreateDay(),"yyyy").equals(year)).mapToLong(Order::getTotal).sum();
+            Long totalMonth=orders.stream().filter(order ->Dates.format(order.getCreateDay(),"MM").equals(month)).mapToLong(Order::getTotal).sum();
+            Long totalDay=orders.stream().filter(order ->Dates.format(order.getCreateDay(),"yyyy-MM-dd").equals(day)).mapToLong(Order::getTotal).sum();
+            orderTotal.setTotalDay(totalDay);
+            orderTotal.setTotalMonth(totalMonth);
+            orderTotal.setTotalYear(totalYear);
+        }
+        return orderTotal;
+    }
+
+    private long total(List<Order> orders) {
+        long total;
         if (orders.isEmpty()) {
             total = 0;
         } else {

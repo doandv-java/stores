@@ -6,10 +6,10 @@ import java.util.EnumSet;
 
 @Getter
 public enum StatusEnum {
-    CART(0, "CART"),
-    ORDER(1, "ORDER"),
-    SUCCESS(2, "SUCCESS"),
-    PEND(3, "PEND");
+    CART(0, "Giỏ hàng"),
+    ORDER(1, "Đang xử lý"),
+    SUCCESS(2, "Thành công"),
+    PEND(3, "Hủy đơn");
 
 
     private int code;

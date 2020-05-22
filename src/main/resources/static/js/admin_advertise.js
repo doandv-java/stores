@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#advertiseTable').dataTable({
         "pageLength": 5,
         "lengthChange": false,
+        "order":[[ 0, "desc" ]]
     });
     resetErrorAdvetise();
     $('#image').change(function () {

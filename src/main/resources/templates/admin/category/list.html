@@ -36,10 +36,11 @@
                             <div class="table-striped">
                                 <table class="table text-center" id="categoryTable">
                                     <thead>
-                                    <tr>
+                                    <tr  style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Tên</th>
                                         <th>Mô tả</th>
-                                        <th>Số lượng sản phẩm</th>
+<!--                                        <th>Số lượng sản phẩm</th>-->
                                         <th class="text-primary">
                                             <a href="javascript:void(0)" data-toggle="modal"
                                                data-target="#categoryModal"><i
@@ -49,9 +50,10 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="category:${categories}" th:id="${category.id}">
+                                        <td style="display:none;" th:text="${category.id}"></td>
                                         <td th:text="${category.name}"></td>
                                         <td th:text="${category.detail}"></td>
-                                        <td th:text="${category.products.size()}"></td>
+<!--                                        <td th:text="${category.products.size()}"></td>-->
                                         <td class="text-primary">
                                             <a href="javascript:void(0)"
                                                th:onclick="'editCategory('+${category.id}+')'"><i
@@ -117,8 +119,8 @@
                         <p class="error" id="name_errors"></p>
                     </div>
                     <div class="md-form mb-5">
-                        <textarea type="text" id="detail" class="md-textarea form-control" rows="4"></textarea>
-                        <label for="detail">Mo tả</label>
+                        <textarea type="text" id="detail"  placeholder="Mô tả" class="md-textarea form-control" rows="4"></textarea>
+                        <label for="detail">Mô tả</label>
                         <p class="error" id="detail_errors"></p>
                     </div>
                 </div>

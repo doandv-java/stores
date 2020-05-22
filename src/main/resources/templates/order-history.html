@@ -6,24 +6,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title> Order History | Doan Stores</title>
-    <link href="/libs/users/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/libs/users/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/libs/users/css/prettyPhoto.css" rel="stylesheet">
-    <link href="/libs/users/css/price-range.css" rel="stylesheet">
-    <link href="/libs/users/css/animate.css" rel="stylesheet">
-    <link href="/libs/users/css/main.css" rel="stylesheet">
-    <link href="/libs/users/css/responsive.css" rel="stylesheet">
+    <link th:href="@{/libs/users/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/prettyPhoto.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/price-range.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/main.css}" rel="stylesheet">
+    <link th:href="@{/libs/users/css/responsive.css}" rel="stylesheet">
 
-    <link rel="shortcut icon" href="/libs/users/images/ico/favicon.ico">
+    <link rel="shortcut icon" th:href="@{/libs/users/images/ico/favicon.ico}">
     <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="/libs/users/images/ico/apple-touch-icon-144-precomposed.png">
+          th:href="@{/libs/users/images/ico/apple-touch-icon-144-precomposed.png}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
-          href="/libs/users/images/ico/apple-touch-icon-114-precomposed.png">
+          th:href="@{/libs/users/images/ico/apple-touch-icon-114-precomposed.png}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72"
-          href="/libs/users/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="/libs/users/images/ico/apple-touch-icon-57-precomposed.png">
+          th:href="@{/libs/users/images/ico/apple-touch-icon-72-precomposed.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/libs/users/images/ico/apple-touch-icon-57-precomposed.png}">
     <link rel="stylesheet"
           th:href="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/css/addons/datatables.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head><!--/head-->
 
 <body>
@@ -51,7 +52,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a th:href="@{/home}"><img src="/libs/users/images/home/logo.png" alt=""/></a>
+                        <a th:href="@{/home}"><p style="text-transform: uppercase; color: #2a6496;">DoanStores</p></a>
                     </div>
                 </div>
                 <div class="col-sm-8">
@@ -162,7 +163,7 @@
                                 <div class="table-striped table-fixed">
                                     <table class="table text-center" id="orderHistoryTable">
                                         <thead>
-                                        <tr>
+                                        <tr style="background-color:#12b6ef;">
                                             <th>Số hóa đơn</th>
                                             <th>Người đặt hàng</th>
                                             <th>Email</th>
@@ -174,7 +175,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="order :${orders}" th:id="${order.id}">
+                                        <tr th:each="order :${orders}" th:id="${order.id}" th:class="'status_'+${order.status}">
                                             <td th:text="${order.id}"></td>
                                             <td th:text="${order.getUser().getName()}"></td>
                                             <td th:text="${order.getUser().getUserName()}"></td>
@@ -184,7 +185,7 @@
                                             <td th:text="${T(doan.stores.enums.StatusEnum).ofCode(order.getStatus()).getText()}">
                                             </td>
                                             <td class="text-primary">
-                                                <a th:href="@{'/order/'+${order.id}}">Chi tiết</a>
+                                                <a th:href="@{'/order/'+${order.id}}">Chi tiết</a> &ensp;
                                                 <a th:if="${order.status==1||order.status==0}" href="javascript:void(0)"
                                                    th:onclick="'DeleteOrder('+${order.id}+')'">Hủy</a>
                                             </td>
@@ -235,17 +236,16 @@
 
 </footer><!--/Footer-->
 
-<script th:src="@{/libs/users/js/jquery.js}"></script>
 <script type="text/javascript"
         th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/webjars/mdbootstrap-bootstrap-material-design/4.8.8/js/addons/datatables.min.js}"></script>
-<script src="/libs/users/js/bootstrap.min.js"></script>
-<script src="/libs/users/js/jquery.scrollUp.min.js"></script>
-<script src="/libs/users/js/price-range.js"></script>
-<script src="/libs/users/js/jquery.prettyPhoto.js"></script>
-<script src="/libs/users/js/main.js"></script>
+<!--<script th:src="@{/libs/users/js/jquery.js}"></script>-->
+<script th:src="@{/libs/users/js/bootstrap.min.js}"></script>
+<script th:src="@{/libs/users/js/jquery.scrollUp.min.js}"></script>
+<script th:src="@{/libs/users/js/price-range.js}"></script>
+<script th:src="@{/libs/users/js/jquery.prettyPhoto.js}"></script>
 <script th:src="@{/libs/users/js/main.js}"></script>
-<script th:src="@{/js/home.js}"></script>
+<!--<script th:src="@{/js/home.js}"></script>-->
 <script th:src="@{/js/order_history.js}"></script>
 </body>
 </html>

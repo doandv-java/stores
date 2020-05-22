@@ -36,7 +36,8 @@
                             <div class="table-striped">
                                 <table class="table text-center" id="advertiseTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Ảnh</th>
                                         <th>Nội dung</th>
                                         <th>Active</th>
@@ -49,6 +50,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="advertise:${advertises}" th:id="${advertise.id}">
+                                        <td style="display:none;" th:text="${advertise.id}"></td>
                                         <td><img style="width: 80px;height: 80px;" th:src="${advertise.imageLink}"></td>
                                         <td th:text="${advertise.content}"></td>
                                         <td>

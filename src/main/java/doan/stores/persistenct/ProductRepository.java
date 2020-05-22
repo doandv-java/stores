@@ -12,15 +12,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCategoryId(long categoryId);
 
-    List<Product> findProductsByCategoryIdIsAndDeletedIs(long categoryId, int deleted);
+    List<Product> findProductsByCategoryIdIsAndDeletedIsOrderByPriceAscNameDesc(long categoryId, int deleted);
 
-    List<Product> findProductsByProducerIsAndDeletedIs(String producer, int deleted);
+    List<Product> findProductsByProducerIsAndDeletedIsOrderByPriceAscNameDesc(String producer, int deleted);
 
-    List<Product> findProductsByDeletedIs(int deleted);
+    List<Product> findProductsByDeletedIsOrderByPriceAsc(int deleted);
 
     Product findProductById(Long id);
 
-    List<Product> findProductsByIdInAndDeletedIs(Long[] productList, int deleted);
+    List<Product> findProductsByIdInAndDeletedIsOrderByPriceAscNameDesc(Long[] productList, int deleted);
 
     Product findProductByNameIsAndDeletedIs(String name, int deleted);
 
@@ -28,7 +28,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCategoryIdIsOrProducerIsAndDeletedIs(Long categoryID, String producer, int deleted, Pageable page);
 
-    List<Product> findProductsByNameContainsOrCategoryIdInAndDeletedIs(String name, List<Long> categoryId, int deleted);
+    List<Product> findProductsByNameContainsOrCategoryIdInAndDeletedIsOrderByPriceAsc(String name, List<Long> categoryId, int deleted);
 
-    List<Product> getProductsByNameContainsAndDeletedIs(String name, int deleted);
+    List<Product> getProductsByNameContainsAndDeletedIsOrderByPriceAsc(String name, int deleted);
+
+    List<Product> getProductsByProducerContainingOrderByPriceAsc(String nameProducer);
+
 }

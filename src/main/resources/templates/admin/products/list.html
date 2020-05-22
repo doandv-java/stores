@@ -36,7 +36,8 @@
                             <div class="table-striped table-fixed">
                                 <table class="table text-center" id="productTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Ảnh</th>
                                         <th>Tên</th>
                                         <th>Nhà cung cấp</th>
@@ -52,6 +53,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="product :${products}" th:id="${product.id}">
+                                        <td style="display:none;" th:text="${product.id}"></td>
                                         <td class="ui-icon-image"><img style="width:80px; height: 80px;"
                                                                        th:src="${product.imageLink}"></td>
                                         <td th:text="${product.name}"></td>

@@ -36,7 +36,8 @@
                             <div class="table-striped table-fixed">
                                 <table class="table text-center" id="warehouseTable">
                                     <thead>
-                                    <tr>
+                                    <tr style="background-color: #428bca;">
+                                        <th style="display: none;">Id</th>
                                         <th>Hình ảnh</th>
                                         <th>Tên Sản phẩm</th>
                                         <th>Số lượng</th>
@@ -49,6 +50,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="warehouse :${warehouses}" th:id="${warehouse.id}">
+                                        <td style="display:none;" th:text="${warehouse.id}"></td>
                                         <td class="ui-icon-image"><img style="width:80px; height: 80px;"
                                                                        th:src="${warehouse.getProduct().getImageLink()}">
                                         </td>
@@ -95,6 +97,7 @@
                         <div class="form-group">
                             <label for="quantity">Số lượng:</label>
                             <input type="number" class="form-control" id="quantity" name="status">
+                            <p class="error" id="quantity_errors"></p>
                         </div>
                     </div>
                 </div>

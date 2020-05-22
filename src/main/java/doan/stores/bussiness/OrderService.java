@@ -3,6 +3,7 @@ package doan.stores.bussiness;
 import doan.stores.domain.Order;
 import doan.stores.domain.OrderDetail;
 import doan.stores.domain.Product;
+import doan.stores.dto.response.StaticsOrderTotal;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface OrderService {
 
     List<Product> top12ProductHot();
 
-    long  getTotal();
+    StaticsOrderTotal getTotal();
 
 
 }

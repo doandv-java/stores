@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +25,14 @@ public class SupplyServiceImpl implements SupplyService {
 
     @Override
     public List<Supply> findSuppliesByDeletedAndActive(int deleted, int active) {
-        return supplyRepository.findSuppliesByDeletedIsAndActiveIs(deleted,active);
+        return supplyRepository.findSuppliesByDeletedIsAndActiveIs(deleted, active);
     }
 
     @Override
     public void saveSupply(SupplyRequest request) {
         Supply supply = new Supply();
         supply.setId(request.getId());
-        supply.setName(request.getName());
+        supply.setName(StringUtils.trimToEmpty(request.getName()).toUpperCase());
         supply.setDetail(request.getDetail());
         supply.setPhone(request.getPhone());
         supply.setEmail(request.getEmail());
@@ -75,4 +76,18 @@ public class SupplyServiceImpl implements SupplyService {
         return false;
     }
 
+    @Override
+    public List<Long> getSupplyIdsByName(String name) {
+        name = StringUtils.capitalize(StringUtils.trimToEmpty(name).toUpperCase());
+        List<Supply> supplies = supplyRepository.findSuppliesByNameContainingAndDeletedIs(name, Constants.DELETE.FALSE);
+        if (supplies.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<Long> ids = new ArrayList<>();
+            for (Supply supply : supplies) {
+                ids.add(supply.getId());
+            }
+            return ids;
+        }
+    }
 }

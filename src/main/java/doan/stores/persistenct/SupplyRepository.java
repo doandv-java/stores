@@ -13,4 +13,6 @@ public interface SupplyRepository extends JpaRepository<Supply, Long> {
     List<Supply> findSuppliesByDeletedIs(int deleted);
 
     List<Supply> findSuppliesByDeletedIsAndActiveIs(int deleted, int active);
+
+    List<Supply> findSuppliesByNameContainingAndDeletedIs(String name, int deleted);
 }

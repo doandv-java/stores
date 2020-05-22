@@ -41,7 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
             category = categoryRepository.getOne(request.getId());
         }
         category.setId(request.getId());
-        category.setName(request.getName());
+        String name = StringUtils.capitalize(StringUtils.trimToEmpty(request.getName()).toLowerCase());
+        category.setName(name);
         category.setDetail(request.getDetail());
         category.setActive(request.getActive());
         categoryRepository.save(category);
@@ -75,8 +76,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public List<Long> getCategoryId(String name) {
-        String like = '%' + StringUtils.trimToEmpty(name) + '%';
-        List<Category> categories = categoryRepository.findCategoriesByNameLike(like);
+        name = StringUtils.capitalize(StringUtils.trimToEmpty(name).toLowerCase());
+        List<Category> categories = categoryRepository.findCategoriesByNameIsContaining(name);
         if (categories.isEmpty()) {
             return null;
         } else {

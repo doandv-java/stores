@@ -36,29 +36,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductsByDeleted(int deleted) {
-        List<Product> products = productRepository.findProductsByDeletedIs(deleted);
+        List<Product> products = productRepository.findProductsByDeletedIsOrderByPriceAsc(deleted);
         return products;
     }
 
     @Override
     public List<Product> findProductsByCategoryId(Long categoryId, int deleted) {
-        List<Product> products = productRepository.findProductsByCategoryIdIsAndDeletedIs(categoryId, deleted);
+        List<Product> products = productRepository.findProductsByCategoryIdIsAndDeletedIsOrderByPriceAscNameDesc(categoryId, deleted);
         return products;
     }
 
     @Override
     public List<Product> findProductsBySupplyId(Long supplyId, int deleted) {
         Supply supply = supplyService.findSupplyById(supplyId);
-        List<Product> products = productRepository.findProductsByProducerIsAndDeletedIs(supply.getName(), deleted);
-        products.sort((product, t1) -> {
-            if (product.getPrice() > t1.getPrice()) {
-                return 1;
-            } else if (product.getPrice() == t1.getPrice()) {
-                return 0;
-            } else {
-                return -1;
-            }
-        });
+        List<Product> products = productRepository.findProductsByProducerIsAndDeletedIsOrderByPriceAscNameDesc(supply.getName(), deleted);
+//        products.sort((product, t1) -> {
+//            if (product.getPrice() > t1.getPrice()) {
+//                return 1;
+//            } else if (product.getPrice() == t1.getPrice()) {
+//                return 0;
+//            } else {
+//                return -1;
+//            }
+//        });
         return products;
     }
 
@@ -73,11 +73,15 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> searchProduct(String keyword) {
         keyword = StringUtils.trimToEmpty(keyword);
         List<Long> categoryIds = categoryService.getCategoryId(keyword);
+        List<Long> supplyIds = supplyService.getSupplyIdsByName(keyword);
         List<Product> products = new ArrayList<>();
-        if (categoryIds == null) {
-            products = productRepository.getProductsByNameContainsAndDeletedIs(keyword, Constants.DELETE.FALSE);
+        if (categoryIds == null && supplyIds == null) {
+            products = productRepository.getProductsByNameContainsAndDeletedIsOrderByPriceAsc(keyword, Constants.DELETE.FALSE);
+        } else if (supplyIds != null) {
+            keyword = keyword.toUpperCase();
+            products = productRepository.getProductsByProducerContainingOrderByPriceAsc(keyword);
         } else {
-            products = productRepository.findProductsByNameContainsOrCategoryIdInAndDeletedIs(keyword, categoryIds, Constants.DELETE.FALSE);
+            products = productRepository.findProductsByNameContainsOrCategoryIdInAndDeletedIsOrderByPriceAsc(keyword, categoryIds, Constants.DELETE.FALSE);
         }
         return products;
     }

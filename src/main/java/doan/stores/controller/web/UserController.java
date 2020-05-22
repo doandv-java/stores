@@ -8,6 +8,7 @@ import doan.stores.dto.response.ErrorResponse;
 import doan.stores.enums.StatusEnum;
 import doan.stores.framework.Settings;
 import doan.stores.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * View page of customer
@@ -52,7 +50,6 @@ public class UserController {
 
     @Autowired
     private Settings settings;
-
 
 
     @GetMapping("/home")
@@ -252,7 +249,7 @@ public class UserController {
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.findProductsByDeleted(Constants.DELETE.FALSE);
         int pageTotal = 0;
-        int size = 6;
+        int size = 12;
         List<Product> pageProducts;
         if (products.size() > 0) {
             if (products.size() % size != 0) {
@@ -293,7 +290,7 @@ public class UserController {
         List<Product> products = productService.findProductsByDeleted(Constants.DELETE.FALSE);
         List<Product> pageProducts;
         int pageTotal = 0;
-        int size = 6;
+        int size = 12;
         if (products.size() > 0) {
             if (products.size() % size != 0) {
                 pageTotal = products.size() / size + 1;
@@ -314,7 +311,7 @@ public class UserController {
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.findProductsByCategoryId(categoryId, Constants.DELETE.FALSE);
         int pageTotal = 0;
-        int size = 6;
+        int size = 12;
         List<Product> pageProducts;
         if (products.size() > 0) {
             if (products.size() % size != 0) {
@@ -354,9 +351,10 @@ public class UserController {
         List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.findProductsByCategoryId(categoryId, Constants.DELETE.FALSE);
-        List<Product> pageProducts;
-        int pageTotal = 0;
-        int size = 6;
+
+        int size = 12;
+        int pageTotal = commonService.getPageTotal(products,size);
+        List<Product> pageProducts=commonService.pageNavigation(products,page,size);
         if (products.size() > 0) {
             if (products.size() % size != 0) {
                 pageTotal = products.size() / size + 1;
@@ -377,7 +375,7 @@ public class UserController {
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.findProductsBySupplyId(supplyId, Constants.DELETE.FALSE);
         int pageTotal = 0;
-        int size = 6;
+        int size = 12;
         List<Product> pageProducts;
         if (products.size() > 0) {
             if (products.size() % size != 0) {
@@ -420,7 +418,7 @@ public class UserController {
         List<Product> products = productService.findProductsBySupplyId(supplyId, Constants.DELETE.FALSE);
         List<Product> pageProducts;
         int pageTotal = 0;
-        int size = 6;
+        int size = 12;
         if (products.size() > 0) {
             if (products.size() % size != 0) {
                 pageTotal = products.size() / size + 1;
@@ -451,6 +449,7 @@ public class UserController {
         mav.setViewName("product_detail");
         return mav;
     }
+
     @GetMapping("/search")
     public ModelAndView searchProduct(@RequestParam("keyword") String keyword) {
         ModelAndView mav = new ModelAndView();
@@ -459,20 +458,13 @@ public class UserController {
         List<Category> categories = categoryService.findCategoriesByActive(Constants.DELETE.FALSE);
         List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
         List<Advertise> advertises = advertiseService.findAllAdvertise();
-        List<Product> products = productService.searchProduct(keyword);
-        int pageTotal = 0;
-        int size = 12;
-        List<Product> pageProducts;
-        if (products.size() > 0) {
-            if (products.size() % size != 0) {
-                pageTotal = products.size() / size + 1;
-            } else {
-                pageTotal = products.size() / size;
-            }
+        List<Product> products = new ArrayList<>();
+        if (!StringUtils.isBlank(keyword)) {
+             products=productService.searchProduct(keyword);
         }
-        int startItem = (pageNumber - 1) * size;
-        int toIndex = Math.min(startItem + size, products.size());
-        pageProducts = products.subList(startItem, toIndex);
+        int size = 12;
+        int pageTotal = commonService.getPageTotal(products,size);
+        List<Product> pageProducts=commonService.pageNavigation(products,pageNumber,size);
         mav.addObject("user", user);
         mav.addObject("categories", categories);
         mav.addObject("supplies", supplies);
@@ -492,19 +484,9 @@ public class UserController {
         List<Supply> supplies = supplyService.findSuppliesByDeletedAndActive(Constants.DELETE.FALSE, Constants.ACTIVE.TRUE);
         List<Advertise> advertises = advertiseService.findAllAdvertise();
         List<Product> products = productService.searchProduct(keyword);
-        int pageTotal = 0;
         int size = 12;
-        List<Product> pageProducts;
-        if (products.size() > 0) {
-            if (products.size() % size != 0) {
-                pageTotal = products.size() / size + 1;
-            } else {
-                pageTotal = products.size() / size;
-            }
-        }
-        int startItem = (page - 1) * size;
-        int toIndex = Math.min(startItem + size, products.size());
-        pageProducts = products.subList(startItem, toIndex);
+        int pageTotal = commonService.getPageTotal(products,size);
+        List<Product> pageProducts=commonService.pageNavigation(products,page,size);
         mav.addObject("user", user);
         mav.addObject("categories", categories);
         mav.addObject("supplies", supplies);

@@ -8,6 +8,7 @@ import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.dto.response.ErrorResponse;
 import doan.stores.dto.response.ProductHot;
+import doan.stores.dto.response.StaticsOrderTotal;
 import doan.stores.enums.RoleEnum;
 import doan.stores.enums.StatusEnum;
 import doan.stores.utils.Constants;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +67,7 @@ public class AdminController {
         User user = userService.findUserByUserName(principal.getUsername());
         List<Warehouse> warehouses = warehouseService.top12Warehouse();
         List<ProductHot> productHots = orderItemService.topProductHot();
-        long total = orderService.getTotal();
+        StaticsOrderTotal total = orderService.getTotal();
         List<User> customers = userService.findUsersByRole(RoleEnum.ROLE_CUSTOMER);
         mav.addObject("user", user);
         mav.addObject("warehouses", warehouses);
@@ -305,8 +307,13 @@ public class AdminController {
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = commonService.bindingResult(result);
         if (errors.isEmpty()) {
-            warehouseService.saveWarehouse(request);
-            map.put("status", 200);
+            if (request.getQuantity() < 0) {
+                map.put("status", 101);
+                map.put("errors", Arrays.asList(new ErrorResponse("quantity", "Số lượng nhập không hợp lệ")));
+            } else {
+                warehouseService.saveWarehouse(request);
+                map.put("status", 200);
+            }
         } else {
             map.put("status", 101);
             map.put("errors", errors);
