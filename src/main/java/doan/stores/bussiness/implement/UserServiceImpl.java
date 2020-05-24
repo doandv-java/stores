@@ -6,6 +6,7 @@ import doan.stores.domain.User;
 import doan.stores.domain.UserPrincipal;
 import doan.stores.dto.dxo.RegisterDxo;
 import doan.stores.dto.request.UserRequest;
+import doan.stores.dto.response.StaticUser;
 import doan.stores.enums.RoleEnum;
 import doan.stores.persistenct.UserRepository;
 import doan.stores.utils.Constants;
@@ -170,5 +171,14 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             return true;
         }
+    }
+
+    @Override
+    public StaticUser staticUser() {
+        StaticUser staticUser = new StaticUser();
+        staticUser.setCustomer(findUsersByRole(RoleEnum.ROLE_CUSTOMER).size());
+        staticUser.setEmployee(findUsersByRole(RoleEnum.ROLE_EMP).size());
+        staticUser.setAdmin(findUsersByRole(RoleEnum.ROLE_ADMIN).size());
+        return staticUser;
     }
 }

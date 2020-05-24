@@ -26,18 +26,24 @@
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h4 class="text-center">Doanh thu</h4>
-                            <p>Năm:<span th:text="${total.getTotalYear()}">1000</span>$</p>
-                            <p>Tháng:<span th:text="${total.getTotalMonth()}">1000</span>$</p>
-                            <p>Ngày:<span th:text="${total.getTotalDay()}">1000</span>$</p>
+                            <p>Năm <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span>:<span
+                                    th:text="${total.getTotalYear()}">1000</span>$</p>
+                            <p>Tháng <span th:text="${#dates.format(#dates.createNow(),'MM')}"></span>:<span
+                                    th:text="${total.getTotalMonth()}">1000</span>$</p>
+                            <p>Ngày <span th:text="${#dates.format(#dates.createNow(),'dd/MM/yyyy')}"></span>:<span
+                                    th:text="${total.getTotalDay()}">1000</span>$</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4">
                     <div class="card">
-                        <div class="card-body">
-                            <p>Số khách hàng:<span th:text="${customers}">1000</span> khách hàng</p>
+                        <div class="card-body text-center">
+                            <h4 class="text-center">Thống kê người dùng</h4>
+                            <p>Số khách hàng:<span th:text="${staticUser.customer}">1000</span> khách hàng</p>
+                            <p>Số nhân viên:<span th:text="${staticUser.employee}">1000</span> nhân viên</p>
+                            <p>Số admin:<span th:text="${staticUser.admin}">1000</span> admin</p>
                         </div>
                     </div>
                 </div>

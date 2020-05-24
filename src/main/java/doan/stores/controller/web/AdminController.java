@@ -8,6 +8,7 @@ import doan.stores.dto.request.UserRequest;
 import doan.stores.dto.request.WarehouseRequest;
 import doan.stores.dto.response.ErrorResponse;
 import doan.stores.dto.response.ProductHot;
+import doan.stores.dto.response.StaticUser;
 import doan.stores.dto.response.StaticsOrderTotal;
 import doan.stores.enums.RoleEnum;
 import doan.stores.enums.StatusEnum;
@@ -68,12 +69,12 @@ public class AdminController {
         List<Warehouse> warehouses = warehouseService.top12Warehouse();
         List<ProductHot> productHots = orderItemService.topProductHot();
         StaticsOrderTotal total = orderService.getTotal();
-        List<User> customers = userService.findUsersByRole(RoleEnum.ROLE_CUSTOMER);
+        StaticUser staticUser = userService.staticUser();
         mav.addObject("user", user);
         mav.addObject("warehouses", warehouses);
         mav.addObject("productHots", productHots);
         mav.addObject("total", total);
-        mav.addObject("customers", customers.size());
+        mav.addObject("staticUser", staticUser);
         mav.setViewName("admin/home");
         return mav;
     }

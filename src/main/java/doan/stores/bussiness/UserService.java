@@ -3,6 +3,7 @@ package doan.stores.bussiness;
 import doan.stores.domain.User;
 import doan.stores.dto.dxo.RegisterDxo;
 import doan.stores.dto.request.UserRequest;
+import doan.stores.dto.response.StaticUser;
 import doan.stores.enums.RoleEnum;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -26,5 +27,7 @@ public interface UserService extends UserDetailsService {
     boolean existUser(String userName, String userNameOld);
 
     boolean register(RegisterDxo dxo);
+
+    StaticUser staticUser();
 
 }
